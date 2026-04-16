@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI in Compliance — Inscend AI</title>
+    <link href="https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        /* ===================================================
+           INSCEND AI — BRAND TOKENS
+           =================================================== */
+        :root {
+            --dark: #0F111C;
+            --dark-2: #161829;
+            --dark-3: #1E2138;
+            --blue: #4897F7;
+            --blue-soft: rgba(72,151,247,0.12);
+            --blue-glow: rgba(72,151,247,0.18);
+            --blue-line: rgba(72,151,247,0.35);
+            --cream: #FAF9F5;
+            --cream-2: #F2F0EA;
+            --cream-3: #E8E5DD;
+            --light: #F5F6FA;
+            --light-dim: rgba(245,246,250,0.78);
+            --light-fade: rgba(245,246,250,0.55);
+            --ink: #040508;
+            --ink-dim: rgba(4,5,8,0.68);
+            --ink-fade: rgba(4,5,8,0.45);
+            --line-dark: rgba(245,246,250,0.08);
+            --line-light: rgba(4,5,8,0.08);
+
+            --fs: 'General Sans', system-ui, sans-serif;
+            --fse: 'Instrument Serif', Georgia, serif;
+
+            --title: clamp(2.4rem, 5.8vw, 5rem);
+            --h1: clamp(1.8rem, 4vw, 3rem);
+            --h2: clamp(1.4rem, 3.3vw, 2.4rem);
+            --h3: clamp(1rem, 2vw, 1.4rem);
+            --body: clamp(0.8rem, 1.2vw, 1rem);
+            --small: clamp(0.68rem, 0.95vw, 0.82rem);
+            --xs: clamp(0.58rem, 0.8vw, 0.72rem);
+            --xxs: clamp(0.52rem, 0.7vw, 0.65rem);
+
+            --pad: clamp(1.5rem, 5vw, 5rem);
+            --pad-sm: clamp(1rem, 3vw, 2.5rem);
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; overflow-x: hidden; }
+        html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+        body { font-family: var(--fs); -webkit-font-smoothing: antialiased; background: var(--dark); }
+
+        .slide {
+            width: 100vw; height: 100vh; height: 100dvh;
+            overflow: hidden; scroll-snap-align: start;
+            display: flex; flex-direction: column; position: relative;
+        }
+        .slide-body {
+            flex: 1; display: flex; flex-direction: column; justify-content: center;
+            max-height: 100%; overflow: hidden; padding: var(--pad);
+            position: relative; z-index: 2;
+        }
+
+        /* Themes */
+        .t-dark { background: var(--dark); color: var(--light); }
+        .t-cream { background: var(--cream); color: var(--ink); }
+
+        /* Top accent bar */
+        .bar { height: 3px; background: var(--blue); width: 100%; flex-shrink: 0; }
+        .t-cream .bar { background: linear-gradient(90deg, var(--blue), transparent 70%); }
+
+        /* ===================================================
+           TYPOGRAPHY
+           =================================================== */
+        .label {
+            font-family: var(--fs); font-size: var(--xs);
+            font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase;
+            color: var(--blue); margin-bottom: clamp(0.4rem, 1vh, 1rem);
+        }
+        .heading {
+            font-family: var(--fs); font-size: var(--h2);
+            font-weight: 600; line-height: 1.12;
+            margin-bottom: clamp(0.5rem, 1.2vh, 1.2rem);
+        }
+        .heading i, .heading em {
+            font-family: var(--fse); font-weight: 400;
+            font-style: italic; color: var(--blue);
+        }
+
+        /* Insight box */
+        .insight {
+            border-left: 3px solid var(--blue);
+            padding: clamp(0.55rem, 1.1vh, 0.9rem) clamp(0.8rem, 1.6vw, 1.3rem);
+            font-size: var(--body); line-height: 1.55;
+            background: var(--blue-soft);
+            margin-bottom: clamp(0.6rem, 1.2vh, 1.1rem);
+            border-radius: 0 4px 4px 0;
+        }
+        .insight strong { font-weight: 600; }
+        .insight em { font-family: var(--fse); }
+
+        /* Callout footer */
+        .callout {
+            padding: clamp(0.55rem, 1.2vh, 0.95rem) var(--pad);
+            font-size: var(--small); line-height: 1.5;
+            background: var(--blue-soft); flex-shrink: 0;
+            position: relative; z-index: 2;
+        }
+        .callout strong { font-weight: 600; }
+        .callout em { font-family: var(--fse); }
+
+        /* ===================================================
+           GENERIC CARDS
+           =================================================== */
+        .g { display: grid; gap: clamp(0.6rem, 1.2vw, 1.1rem);
+             margin-top: clamp(0.5rem, 1.1vh, 1rem); }
+        .g2 { grid-template-columns: 1fr 1fr; }
+        .g3 { grid-template-columns: repeat(3, 1fr); }
+        .g4 { grid-template-columns: repeat(4, 1fr); }
+
+        .c {
+            padding: clamp(0.9rem, 1.8vw, 1.6rem);
+            border-radius: 8px; display: flex;
+            flex-direction: column; gap: clamp(0.2rem, 0.45vh, 0.4rem);
+        }
+        .c-outline { border: 1px solid var(--line-light); background: white; }
+        .t-dark .c-outline { border-color: var(--line-dark); background: rgba(255,255,255,0.04); }
+        .c-blue { background: var(--blue); color: white; border: 1px solid var(--blue); }
+        .c-blue .c-dim { color: rgba(255,255,255,0.8); }
+        .c-blue .c-lbl { color: rgba(255,255,255,0.65); }
+        .c-dark { background: var(--dark); color: var(--light); }
+        .c-dark .c-dim { color: var(--light-dim); }
+        .c-dark .c-lbl { color: var(--blue); }
+
+        .c-num {
+            font-family: var(--fse); font-style: italic;
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            font-weight: 400; line-height: 1; opacity: 0.1;
+        }
+        .c-lbl {
+            font-size: var(--xs); font-weight: 600;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--blue);
+        }
+        .c-title {
+            font-family: var(--fs); font-size: var(--h3);
+            font-weight: 600; line-height: 1.2;
+        }
+        .c-q {
+            font-family: var(--fs); font-weight: 500;
+            font-size: var(--small); color: var(--blue); line-height: 1.35;
+        }
+        .c-dim {
+            font-size: var(--small); line-height: 1.55;
+            color: var(--ink-dim);
+        }
+        .t-dark .c-dim { color: var(--light-dim); }
+        .c-foot {
+            font-size: var(--small); font-style: italic;
+            color: var(--blue); margin-top: auto;
+            padding-top: clamp(0.25rem, 0.5vh, 0.5rem);
+            border-top: 1px solid var(--line-light);
+        }
+        .t-dark .c-foot { border-top-color: var(--line-dark); }
+
+        .tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px; }
+        .tag {
+            font-size: clamp(0.5rem, 0.7vw, 0.65rem); padding: 2px 8px;
+            border-radius: 3px; font-weight: 500;
+        }
+        .tag-b { background: var(--blue); color: white; }
+        .tag-o { border: 1px solid var(--line-light); color: var(--ink-dim); }
+        .t-dark .tag-o { border-color: var(--line-dark); color: var(--light-dim); }
+
+        /* ===================================================
+           TITLE SLIDE
+           =================================================== */
+        .title-slide .slide-body {
+            justify-content: flex-end;
+            padding-bottom: clamp(3rem, 8vh, 7rem);
+        }
+        .title-brand {
+            font-size: var(--small); font-weight: 700;
+            letter-spacing: 0.35em; color: var(--blue);
+            margin-bottom: clamp(0.8rem, 2vh, 1.5rem);
+        }
+        .title-h1 {
+            font-family: var(--fs); font-size: var(--title);
+            font-weight: 600; line-height: 1.05; max-width: 16ch;
+        }
+        .title-h1 i { font-family: var(--fse); font-weight: 400; font-style: italic; color: var(--blue); }
+        .title-sub {
+            font-size: var(--body); color: var(--light-dim);
+            margin-top: clamp(0.6rem, 1.6vh, 1.3rem);
+            max-width: 54ch; line-height: 1.6;
+        }
+        .title-meta {
+            display: flex; gap: clamp(1rem, 3vw, 2.5rem);
+            margin-top: clamp(1rem, 3vh, 2rem);
+            font-size: var(--small); color: var(--light-dim);
+        }
+        .title-dot {
+            position: absolute; top: var(--pad); right: var(--pad);
+            width: clamp(40px, 6vw, 70px); height: clamp(40px, 6vw, 70px);
+            border: 1.5px solid var(--blue); border-radius: 50%; opacity: 0.2;
+        }
+        .title-dot::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 5px; height: 5px; background: var(--blue);
+            border-radius: 50%; transform: translate(-50%, -50%);
+        }
+
+        /* ===================================================
+           ABOUT SLIDE
+           =================================================== */
+        .about-grid { display: grid; grid-template-columns: 40% 60%; height: 100%; }
+
+        .about-left {
+            background: var(--dark); color: var(--light);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            padding: clamp(1.5rem, 4vw, 3.5rem);
+            position: relative;
+        }
+        .about-left::before {
+            content: ''; position: absolute;
+            width: 340px; height: 340px; border-radius: 50%;
+            background: radial-gradient(circle, var(--blue-glow) 0%, transparent 70%);
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .about-top-label {
+            font-size: var(--xs); font-weight: 600;
+            letter-spacing: 0.28em; text-transform: uppercase;
+            color: var(--blue); margin-bottom: clamp(1rem, 3vh, 2rem);
+            position: relative; z-index: 1;
+        }
+        .about-name {
+            font-family: var(--fse); font-weight: 400;
+            font-size: clamp(2.4rem, 5vw, 4.2rem);
+            line-height: 1;
+            position: relative; z-index: 1;
+            margin-bottom: clamp(0.8rem, 2vh, 1.5rem);
+        }
+        .about-role {
+            font-size: var(--body); color: var(--blue); font-weight: 500;
+            position: relative; z-index: 1;
+            margin-bottom: clamp(0.15rem, 0.4vh, 0.3rem);
+        }
+        .about-org {
+            font-size: var(--small); color: var(--light-dim);
+            position: relative; z-index: 1;
+            margin-bottom: clamp(1.2rem, 3.5vh, 2.5rem);
+        }
+        .about-stats {
+            display: flex; gap: clamp(1.5rem, 3vw, 2.5rem);
+            position: relative; z-index: 1;
+        }
+        .stat { display: flex; flex-direction: column; align-items: center; gap: clamp(0.15rem, 0.3vh, 0.25rem); }
+        .stat-num {
+            font-family: var(--fs); font-weight: 300;
+            font-size: clamp(1.6rem, 3.3vw, 2.6rem); line-height: 1;
+            color: var(--light); letter-spacing: -0.02em;
+        }
+        .stat-label {
+            font-size: var(--xxs); color: var(--light-dim);
+            text-transform: uppercase; letter-spacing: 0.08em;
+            line-height: 1.3;
+        }
+
+        .about-right {
+            background: var(--cream); color: var(--ink);
+            padding: clamp(1.5rem, 3vw, 3rem) clamp(2rem, 4vw, 4rem);
+            display: flex; flex-direction: column;
+            justify-content: center; overflow: hidden;
+        }
+        .about-right-label {
+            font-size: var(--xs); font-weight: 600;
+            letter-spacing: 0.24em; text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: clamp(1rem, 2.5vh, 1.8rem);
+        }
+
+        /* Timeline */
+        .timeline { display: flex; flex-direction: column; position: relative; }
+        .timeline::before {
+            content: ''; position: absolute;
+            left: 5px; top: 8px; bottom: 8px;
+            width: 1px; background: var(--line-light);
+        }
+        .tl-item {
+            display: grid; grid-template-columns: 20px 1fr;
+            gap: clamp(0.6rem, 1.2vw, 1.1rem);
+            padding-bottom: clamp(0.7rem, 1.6vh, 1.3rem);
+            position: relative;
+        }
+        .tl-item:last-child { padding-bottom: 0; }
+        .tl-dot {
+            width: 9px; height: 9px; border-radius: 50%;
+            border: 1.5px solid var(--blue); background: var(--cream);
+            margin-top: 6px; z-index: 1;
+        }
+        .tl-label {
+            font-size: var(--xxs); font-weight: 600;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: clamp(0.15rem, 0.3vh, 0.25rem);
+        }
+        .tl-title {
+            font-family: var(--fs); font-size: var(--body);
+            font-weight: 600; line-height: 1.3;
+        }
+        .tl-sub {
+            font-size: var(--small); color: var(--ink-dim);
+            line-height: 1.4; margin-top: 1px;
+        }
+        .tl-desc {
+            font-size: var(--small); color: var(--ink-dim);
+            line-height: 1.45; margin-top: clamp(0.15rem, 0.3vh, 0.3rem);
+        }
+
+        /* Tightened timeline for depth */
+        .timeline { display: flex; flex-direction: column; position: relative; }
+        .tl-item {
+            padding-bottom: clamp(0.55rem, 1.2vh, 1rem);
+        }
+
+        .about-advisory-block {
+            margin-top: clamp(0.6rem, 1.4vh, 1rem);
+            padding-top: clamp(0.6rem, 1.2vh, 1rem);
+            border-top: 1px solid var(--line-light);
+        }
+        .about-advisory-label {
+            font-size: var(--xxs); font-weight: 600;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: clamp(0.4rem, 0.8vh, 0.7rem);
+        }
+        .adv-list { display: flex; flex-direction: column; gap: clamp(0.2rem, 0.4vh, 0.35rem); }
+        .adv-item {
+            display: grid;
+            grid-template-columns: clamp(38px, 5vw, 54px) 1fr;
+            gap: clamp(0.5rem, 1vw, 0.9rem);
+            font-size: var(--xs); line-height: 1.4;
+            align-items: baseline;
+        }
+        .adv-year {
+            font-family: var(--fs); font-weight: 600;
+            color: var(--blue); font-size: var(--xs);
+            letter-spacing: 0.05em;
+        }
+        .adv-detail {
+            color: var(--ink-dim);
+        }
+        .adv-detail strong { color: var(--ink); font-weight: 600; }
+
+        .about-links-row {
+            display: flex; gap: clamp(0.7rem, 1.2vw, 1.2rem);
+            margin-top: clamp(0.5rem, 1vh, 0.8rem);
+            padding-top: clamp(0.5rem, 1vh, 0.8rem);
+            border-top: 1px solid var(--line-light);
+            font-size: var(--small);
+        }
+        .about-links-row a {
+            color: var(--blue); text-decoration: none;
+            font-weight: 500; border-bottom: 1px solid var(--blue);
+            padding-bottom: 1px;
+        }
+
+        /* ===================================================
+           AGENDA SLIDE
+           =================================================== */
+        .agenda {
+            display: flex; flex-direction: column;
+            margin-top: clamp(0.6rem, 1.4vh, 1.2rem);
+        }
+        .ag-item {
+            display: grid;
+            grid-template-columns: clamp(55px, 7vw, 85px) 1fr auto;
+            align-items: center;
+            padding: clamp(0.8rem, 1.6vh, 1.3rem) 0;
+            border-bottom: 1px solid var(--line-dark);
+            gap: clamp(0.5rem, 1vw, 1rem);
+        }
+        .ag-item:last-child { border-bottom: none; }
+        .ag-num {
+            font-family: var(--fse); font-style: italic;
+            font-size: clamp(1.1rem, 2vw, 1.6rem);
+            color: var(--blue); opacity: 0.55;
+        }
+        .ag-center { display: flex; flex-direction: column; gap: 2px; }
+        .ag-title {
+            font-family: var(--fs); font-size: var(--h3);
+            font-weight: 600;
+        }
+        .ag-title i { font-family: var(--fse); font-weight: 400; font-style: italic; color: var(--blue); }
+        .ag-desc {
+            font-size: var(--small); color: var(--light-dim);
+            line-height: 1.4;
+        }
+        .ag-marker {
+            width: clamp(18px, 2.5vw, 28px); height: 1px;
+            background: var(--blue); opacity: 0.5;
+        }
+
+        /* ===================================================
+           DIVIDER SLIDES
+           =================================================== */
+        .divider { justify-content: center; align-items: center; text-align: center; }
+        .divider-inner { display: flex; flex-direction: column; align-items: center; gap: clamp(0.4rem, 1vh, 0.9rem); }
+        .divider-title {
+            font-family: var(--fs); font-size: var(--title);
+            font-weight: 600; line-height: 1.08; max-width: 14ch;
+        }
+        .divider-title i { font-family: var(--fse); font-weight: 400; font-style: italic; color: var(--blue); }
+        .divider-line { width: 50px; height: 3px; background: var(--blue); border-radius: 2px; }
+        .divider::before {
+            content: ''; position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(72,151,247,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(72,151,247,0.035) 1px, transparent 1px);
+            background-size: 60px 60px; pointer-events: none;
+        }
+
+        /* ===================================================
+           WAVE BACKGROUND (Section 01 — The Shift)
+           =================================================== */
+        .waves-wrap {
+            position: absolute; inset: 0; pointer-events: none;
+            z-index: 1; overflow: hidden;
+        }
+        .waves-wrap svg {
+            position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 60%;
+        }
+        .wave-path { fill: none; stroke-width: 1; }
+        @keyframes waveDrift {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-30px); }
+        }
+        .wave-path.w1 { animation: waveDrift 14s ease-in-out infinite; }
+        .wave-path.w2 { animation: waveDrift 18s ease-in-out infinite reverse; }
+        .wave-path.w3 { animation: waveDrift 22s ease-in-out infinite; }
+
+        /* ===================================================
+           STACKED LAYERS (What AI Ready Means)
+           =================================================== */
+        .layers {
+            display: flex; flex-direction: column;
+            gap: clamp(0.5rem, 1vh, 0.9rem);
+            margin-top: clamp(0.5rem, 1vh, 0.9rem);
+        }
+        .layer {
+            display: grid;
+            grid-template-columns: clamp(90px, 13vw, 170px) 1fr;
+            border-radius: 8px; overflow: hidden;
+            align-items: stretch;
+        }
+        .layer-badge {
+            padding: clamp(0.8rem, 1.6vw, 1.4rem) clamp(0.7rem, 1.4vw, 1.2rem);
+            display: flex; flex-direction: column;
+            justify-content: center; gap: 3px;
+        }
+        .layer-1 .layer-badge { background: var(--dark-3); color: var(--light); }
+        .layer-2 .layer-badge { background: var(--dark-2); color: var(--light); }
+        .layer-3 .layer-badge { background: var(--dark); color: var(--light); }
+        .layer-badge-n {
+            font-family: var(--fs); font-weight: 600;
+            font-size: var(--xs); letter-spacing: 0.22em;
+            text-transform: uppercase; color: var(--blue);
+        }
+        .layer-badge-t {
+            font-family: var(--fs); font-weight: 600;
+            font-size: clamp(1.1rem, 2vw, 1.6rem);
+            line-height: 1.1; color: var(--light);
+        }
+        .layer-body {
+            padding: clamp(0.7rem, 1.5vw, 1.3rem) clamp(0.9rem, 1.8vw, 1.6rem);
+            background: rgba(72,151,247,0.04);
+            display: flex; flex-direction: column;
+            justify-content: center; gap: clamp(0.2rem, 0.4vh, 0.4rem);
+        }
+        .layer-body-t {
+            font-size: var(--small); line-height: 1.55;
+            color: var(--ink);
+        }
+        .layer-body-ex {
+            font-size: var(--xs); color: var(--ink-fade);
+            font-family: var(--fs); font-weight: 400;
+        }
+
+        /* ===================================================
+           VALUE CHAIN MATRIX
+           =================================================== */
+        .vc-matrix {
+            display: grid;
+            grid-template-columns: clamp(85px, 11vw, 130px) repeat(6, 1fr);
+            gap: 2px; border-radius: 8px; overflow: hidden;
+            margin-top: clamp(0.5rem, 1vh, 0.9rem);
+            background: var(--line-light);
+        }
+        .vc-cell {
+            padding: clamp(0.5rem, 1.1vw, 0.9rem) clamp(0.4rem, 0.9vw, 0.8rem);
+            background: var(--cream);
+            font-size: var(--xs); line-height: 1.4;
+            display: flex; align-items: flex-start;
+            gap: 7px;
+        }
+        .vc-cell::before {
+            content: ''; flex-shrink: 0;
+            width: 5px; height: 5px;
+            background: var(--blue);
+            margin-top: 6px;
+        }
+        .vc-row-ai .vc-cell::before { background: var(--dark); }
+        .vc-row-out .vc-cell::before { background: var(--blue); }
+        .vc-head {
+            background: var(--dark); color: var(--light);
+            font-weight: 600; font-size: var(--xs);
+            text-align: center; line-height: 1.25;
+        }
+        .vc-head-corner { background: var(--cream); }
+        .vc-rowlabel {
+            font-family: var(--fs); font-weight: 600;
+            font-size: var(--xs); letter-spacing: 0.15em;
+            text-transform: uppercase;
+            display: flex; align-items: center;
+            padding: clamp(0.5rem, 1.1vw, 0.9rem) clamp(0.5rem, 1vw, 0.9rem);
+        }
+        .vc-row-today .vc-rowlabel { background: var(--cream-3); color: var(--ink-dim); }
+        .vc-row-today .vc-cell { background: var(--cream-2); color: var(--ink-dim); }
+        .vc-row-ai .vc-rowlabel { background: var(--blue); color: white; }
+        .vc-row-ai .vc-cell {
+            background: rgba(72,151,247,0.12); color: var(--ink);
+            font-weight: 500;
+        }
+        .vc-row-out .vc-rowlabel { background: var(--dark); color: var(--blue); }
+        .vc-row-out .vc-cell {
+            background: var(--dark); color: var(--light);
+            font-weight: 500;
+        }
+        .vc-row {
+            display: contents;
+        }
+
+        /* ===================================================
+           TODAY → AI → OPPORTUNITY (3 big blocks)
+           =================================================== */
+        .progression {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr;
+            gap: clamp(0.4rem, 1vw, 0.9rem);
+            align-items: stretch;
+            margin-top: clamp(0.5rem, 1.2vh, 1.1rem);
+        }
+        .prg-block {
+            padding: clamp(1rem, 2vw, 1.8rem);
+            border-radius: 10px;
+            display: flex; flex-direction: column;
+            gap: clamp(0.3rem, 0.7vh, 0.6rem);
+        }
+        .prg-1 {
+            background: var(--cream-3); color: var(--ink-dim);
+            border: 1px solid var(--line-light);
+        }
+        .prg-2 { background: var(--blue); color: white; }
+        .prg-3 { background: var(--dark); color: var(--light); }
+        .prg-lbl {
+            font-size: var(--xs); font-weight: 700;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            opacity: 0.85;
+        }
+        .prg-1 .prg-lbl { color: var(--ink-dim); }
+        .prg-2 .prg-lbl { color: rgba(255,255,255,0.85); }
+        .prg-3 .prg-lbl { color: var(--blue); opacity: 1; }
+        .prg-title {
+            font-family: var(--fs); font-weight: 600;
+            font-size: clamp(1.3rem, 2.5vw, 2rem);
+            line-height: 1.15; letter-spacing: -0.01em;
+        }
+        .prg-body {
+            font-size: var(--small); line-height: 1.55;
+            margin-top: auto;
+        }
+        .prg-1 .prg-body { color: var(--ink-dim); }
+        .prg-2 .prg-body { color: rgba(255,255,255,0.88); }
+        .prg-3 .prg-body { color: var(--light-dim); }
+        .prg-arrow {
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--fs); font-weight: 300;
+            font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+            color: var(--blue);
+        }
+
+        .select-note {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: var(--xs); font-weight: 500;
+            color: var(--blue); opacity: 0.7;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            margin-bottom: clamp(0.4rem, 0.9vh, 0.8rem);
+        }
+        .select-note::before {
+            content: ''; display: inline-block;
+            width: 18px; height: 1px; background: var(--blue);
+        }
+
+        /* ===================================================
+           CASES + TAKEAWAY (Upstream / Downstream)
+           =================================================== */
+        .case-layout {
+            display: grid; grid-template-columns: 58% 42%;
+            gap: clamp(1rem, 2vw, 2rem);
+            margin-top: clamp(0.5rem, 1vh, 0.9rem);
+            align-items: stretch;
+        }
+        .cases {
+            display: flex; flex-direction: column;
+            gap: clamp(0.5rem, 1vh, 0.8rem);
+        }
+        .case-card {
+            padding: clamp(0.7rem, 1.4vw, 1.2rem);
+            border: 1px solid var(--line-light);
+            border-radius: 8px;
+            background: white;
+            display: grid;
+            grid-template-columns: clamp(30px, 5vw, 44px) 1fr;
+            gap: clamp(0.5rem, 1vw, 0.9rem);
+        }
+        .t-dark .case-card {
+            background: rgba(255,255,255,0.04);
+            border-color: var(--line-dark);
+        }
+        .case-num {
+            font-family: var(--fse); font-style: italic;
+            font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+            color: var(--blue); line-height: 1;
+        }
+        .case-lbl {
+            font-size: var(--xxs); font-weight: 600;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--blue);
+        }
+        .case-title {
+            font-family: var(--fs); font-size: var(--body);
+            font-weight: 600; line-height: 1.2;
+            margin-top: 2px;
+        }
+        .case-desc {
+            font-size: var(--small); line-height: 1.5;
+            color: var(--ink-dim); margin-top: clamp(0.15rem, 0.3vh, 0.3rem);
+        }
+        .t-dark .case-desc { color: var(--light-dim); }
+
+        .takeaway {
+            padding: clamp(1.2rem, 2.5vw, 2.2rem) clamp(1rem, 2vw, 1.8rem);
+            background: var(--blue); color: white;
+            border-radius: 10px;
+            display: flex; flex-direction: column;
+            justify-content: center; gap: clamp(0.5rem, 1vh, 0.9rem);
+        }
+        .t-dark .takeaway { background: var(--blue); }
+        .takeaway-lbl {
+            font-size: var(--xs); font-weight: 700;
+            letter-spacing: 0.24em; text-transform: uppercase;
+            color: rgba(255,255,255,0.75);
+        }
+        .takeaway-body {
+            font-family: var(--fse); font-style: italic;
+            font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+            font-weight: 400; line-height: 1.25;
+        }
+        .takeaway-stat {
+            display: flex; align-items: baseline; gap: 0.5rem;
+            padding-top: clamp(0.4rem, 0.8vh, 0.6rem);
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        .takeaway-stat-big {
+            font-family: var(--fse); font-style: italic;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            line-height: 1;
+        }
+        .takeaway-stat-lbl {
+            font-size: var(--xs); color: rgba(255,255,255,0.8);
+            line-height: 1.3; max-width: 18ch;
+        }
+
+        /* ===================================================
+           IMPACT MATRIX (4 dimensions, generous spacing)
+           =================================================== */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(0.6rem, 1.3vw, 1.2rem);
+            margin-top: clamp(0.6rem, 1.3vh, 1.2rem);
+        }
+        .imp-card {
+            padding: clamp(1rem, 2vw, 1.8rem);
+            border-radius: 10px;
+            display: flex; flex-direction: column;
+            gap: clamp(0.35rem, 0.7vh, 0.6rem);
+            min-height: clamp(180px, 32vh, 280px);
+        }
+        .imp-1, .imp-3 {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--line-dark);
+            color: var(--light);
+        }
+        .imp-2 { background: var(--blue); color: white; }
+        .imp-4 {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--line-dark);
+            color: var(--light);
+            position: relative;
+        }
+        .imp-4::before {
+            content: ''; position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: var(--blue);
+        }
+        .imp-lbl {
+            font-size: var(--xs); font-weight: 600;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--blue);
+        }
+        .imp-2 .imp-lbl { color: rgba(255,255,255,0.85); }
+        .imp-verb {
+            font-family: var(--fs); font-weight: 600;
+            font-size: clamp(1.5rem, 3vw, 2.4rem);
+            line-height: 1.05; letter-spacing: -0.02em;
+        }
+        .imp-body {
+            font-size: var(--small); line-height: 1.6;
+            margin-top: auto; color: var(--light-dim);
+        }
+        .imp-2 .imp-body { color: rgba(255,255,255,0.9); }
+
+        /* ===================================================
+           DATA READINESS (4 cards)
+           =================================================== */
+        .data-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: clamp(0.6rem, 1.3vw, 1.2rem);
+            margin-top: clamp(0.5rem, 1vh, 0.9rem);
+        }
+
+        /* ===================================================
+           FRAMEWORK VERTICAL
+           =================================================== */
+        .fw-vertical {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            border-radius: 10px; overflow: hidden;
+            margin-top: clamp(0.5rem, 1vh, 0.9rem);
+            height: clamp(280px, 55vh, 500px);
+        }
+        .fw-step {
+            display: flex; flex-direction: column;
+            padding: clamp(0.8rem, 1.6vw, 1.5rem);
+            gap: clamp(0.25rem, 0.5vh, 0.5rem);
+            color: var(--light); position: relative;
+        }
+        .fw-step:nth-child(1) { background: #0F111C; }
+        .fw-step:nth-child(2) { background: #171E3A; }
+        .fw-step:nth-child(3) { background: #1F2F5A; }
+        .fw-step:nth-child(4) { background: #2A4278; }
+        .fw-step:nth-child(5) { background: #3568AE; }
+        .fw-num {
+            font-family: var(--fs); font-weight: 300;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            opacity: 0.25; line-height: 1;
+        }
+        .fw-title {
+            font-family: var(--fs); font-weight: 600;
+            font-size: var(--h3); letter-spacing: -0.01em;
+        }
+        .fw-desc {
+            font-size: var(--small); line-height: 1.5;
+            opacity: 0.85; margin-top: auto;
+        }
+
+        /* ===================================================
+           METRIC TABLE — LEADING PROMINENT
+           =================================================== */
+        .mtable {
+            display: grid; grid-template-columns: 1.15fr 1fr;
+            border-radius: 10px; overflow: hidden;
+            margin-top: clamp(0.5rem, 1vh, 0.9rem);
+            gap: clamp(0.5rem, 1vw, 1rem);
+        }
+        .mcol { display: flex; flex-direction: column; }
+        .mcol-leading {
+            background: var(--blue); color: white;
+            border-radius: 10px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(72,151,247,0.15);
+        }
+        .mcol-lagging {
+            background: white; color: var(--ink);
+            border: 1px solid var(--line-light);
+            border-radius: 10px; overflow: hidden;
+        }
+        .t-dark .mcol-lagging {
+            background: rgba(255,255,255,0.04);
+            border-color: var(--line-dark); color: var(--light);
+        }
+        .mcol-head {
+            padding: clamp(0.6rem, 1.2vw, 1rem) clamp(0.8rem, 1.5vw, 1.3rem);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+        .mcol-lagging .mcol-head { border-bottom-color: var(--line-light); }
+        .t-dark .mcol-lagging .mcol-head { border-bottom-color: var(--line-dark); }
+        .mcol-head-t { font-weight: 600; font-size: var(--body); }
+        .mcol-head-sub {
+            font-size: var(--small);
+            opacity: 0.8; margin-top: 2px;
+            font-family: var(--fs); font-weight: 400;
+        }
+        .mcol-item {
+            padding: clamp(0.5rem, 1vh, 0.75rem) clamp(0.8rem, 1.5vw, 1.3rem);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+        .mcol-lagging .mcol-item { border-bottom-color: var(--line-light); }
+        .t-dark .mcol-lagging .mcol-item { border-bottom-color: var(--line-dark); }
+        .mcol-item:last-child { border-bottom: none; }
+        .mcol-item-t { font-weight: 600; font-size: var(--small); margin-bottom: 2px; }
+        .mcol-item-d {
+            font-size: var(--xs); line-height: 1.4;
+            opacity: 0.75;
+        }
+
+        /* ===================================================
+           NUMBERED LIST (pitfalls)
+           =================================================== */
+        .nlist {
+            border: 1px solid var(--line-light); border-radius: 10px;
+            overflow: hidden; margin-top: clamp(0.5rem, 1vh, 0.9rem);
+        }
+        .nitem {
+            display: grid;
+            grid-template-columns: clamp(50px, 7vw, 80px) clamp(170px, 23vw, 290px) 1fr;
+            border-bottom: 1px solid var(--line-light);
+            font-size: var(--small); align-items: center;
+        }
+        .nitem:last-child { border-bottom: none; }
+        .nitem:nth-child(even) { background: rgba(72,151,247,0.02); }
+        .nitem-n {
+            padding: clamp(0.55rem, 1vh, 0.8rem);
+            font-family: var(--fse); font-style: italic;
+            font-size: clamp(1.1rem, 1.8vw, 1.5rem); color: rgba(4,5,8,0.15);
+            text-align: center;
+        }
+        .nitem-t {
+            padding: clamp(0.55rem, 1vh, 0.8rem);
+            font-weight: 600; color: var(--blue);
+            border-left: 1px solid var(--line-light);
+        }
+        .nitem-d {
+            padding: clamp(0.55rem, 1vh, 0.8rem);
+            line-height: 1.5; border-left: 1px solid var(--line-light);
+            color: var(--ink-dim);
+        }
+
+        /* ===================================================
+           COMPARISON TABLE
+           =================================================== */
+        .cmp {
+            display: grid; grid-template-columns: clamp(95px, 14vw, 160px) 1fr 1fr;
+            border: 1px solid var(--line-light); border-radius: 10px;
+            overflow: hidden; margin-top: clamp(0.5rem, 1vh, 0.9rem);
+        }
+        .cmp-corner {
+            padding: clamp(0.55rem, 1vh, 0.85rem) clamp(0.6rem, 1.2vw, 1rem);
+            background: var(--cream-2); border-bottom: 1px solid var(--line-light);
+            border-right: 1px solid var(--line-light);
+        }
+        .cmp-ha {
+            padding: clamp(0.55rem, 1vh, 0.85rem) clamp(0.6rem, 1.2vw, 1rem);
+            font-weight: 600; font-size: var(--body);
+            border-bottom: 1px solid var(--line-light);
+            border-right: 1px solid var(--line-light);
+            background: var(--cream-2);
+        }
+        .cmp-hb {
+            padding: clamp(0.55rem, 1vh, 0.85rem) clamp(0.6rem, 1.2vw, 1rem);
+            font-weight: 600; font-size: var(--body);
+            border-bottom: 1px solid var(--line-light);
+            background: var(--blue); color: white;
+        }
+        .cmp-label {
+            padding: clamp(0.5rem, 0.9vh, 0.75rem) clamp(0.6rem, 1.2vw, 1rem);
+            font-size: var(--xs); font-weight: 600;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            color: var(--ink-dim);
+            border-right: 1px solid var(--line-light);
+            border-bottom: 1px solid var(--line-light);
+            display: flex; align-items: flex-start;
+        }
+        .cmp-cell {
+            padding: clamp(0.5rem, 0.9vh, 0.75rem) clamp(0.6rem, 1.2vw, 1rem);
+            font-size: var(--small); line-height: 1.5;
+            border-right: 1px solid var(--line-light);
+            border-bottom: 1px solid var(--line-light);
+        }
+        .cmp-cell:last-child { border-right: none; }
+        .cmp-cell-b { background: rgba(72,151,247,0.05); }
+
+        /* ===================================================
+           CLOSING
+           =================================================== */
+        .close-grid { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
+        .close-left {
+            background: var(--dark); color: var(--light);
+            display: flex; flex-direction: column;
+            justify-content: center; padding: var(--pad);
+            gap: clamp(0.4rem, 1vh, 1rem);
+        }
+        .close-right {
+            background: transparent; position: relative; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .close-right::before {
+            content: ''; position: absolute;
+            width: 400px; height: 400px; border-radius: 50%;
+            background: radial-gradient(circle, var(--blue-glow) 0%, transparent 70%);
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        .close-waves {
+            position: absolute; inset: 0; pointer-events: none;
+            z-index: 0;
+        }
+        .close-waves svg {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+        .close-left, .close-right { position: relative; z-index: 2; }
+        .close-left { background: transparent; }
+        .close-brand {
+            font-size: clamp(1.2rem, 2.2vw, 1.8rem); font-weight: 700;
+            letter-spacing: 0.25em; color: var(--light);
+            position: relative; z-index: 1;
+        }
+        .close-brand span { color: var(--blue); }
+
+        /* ===================================================
+           ANIMATIONS
+           =================================================== */
+        .r { opacity: 0; transform: translateY(18px);
+             transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+        .slide.vis .r { opacity: 1; transform: translateY(0); }
+        .r:nth-child(1) { transition-delay: 0.05s; }
+        .r:nth-child(2) { transition-delay: 0.12s; }
+        .r:nth-child(3) { transition-delay: 0.2s; }
+        .r:nth-child(4) { transition-delay: 0.28s; }
+        .r:nth-child(5) { transition-delay: 0.36s; }
+        .r:nth-child(6) { transition-delay: 0.44s; }
+
+        /* Progress & Nav */
+        .progress { position: fixed; top: 0; left: 0; height: 2px;
+                    background: var(--blue); z-index: 1001;
+                    transition: width 0.3s ease; width: 0%; }
+        .nav {
+            position: fixed; bottom: 0; right: 0;
+            display: flex; align-items: center; gap: clamp(0.4rem, 0.8vw, 0.8rem);
+            padding: clamp(0.4rem, 0.6vh, 0.5rem) clamp(0.6rem, 1.2vw, 1rem);
+            z-index: 1000; font-size: var(--small);
+        }
+        .nav-btn {
+            padding: clamp(0.3rem, 0.5vh, 0.45rem) clamp(0.5rem, 0.9vw, 0.75rem);
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(15,17,28,0.9); color: var(--light);
+            cursor: pointer; font-family: var(--fs);
+            font-size: var(--small); border-radius: 4px;
+            backdrop-filter: blur(12px); transition: background 0.2s;
+        }
+        .nav-btn:hover { background: rgba(72,151,247,0.2); }
+        .nav-count {
+            padding: clamp(0.3rem, 0.5vh, 0.45rem) clamp(0.5rem, 0.8vw, 0.65rem);
+            background: rgba(15,17,28,0.9); color: var(--light);
+            border-radius: 4px; backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Responsive */
+        @media (max-height: 700px) {
+            :root { --pad: clamp(0.75rem, 3vw, 2rem); --h2: clamp(1.1rem, 3vw, 2rem); }
+            .about-name { font-size: clamp(2rem, 4.2vw, 3.2rem); }
+        }
+        @media (max-height: 600px) {
+            :root { --pad: clamp(0.5rem, 2.5vw, 1.5rem); --title: clamp(1.2rem, 4vw, 2.2rem);
+                    --body: clamp(0.72rem, 1.1vw, 0.9rem); }
+            .nav { display: none; }
+        }
+        @media (max-width: 900px) {
+            .vc-matrix { grid-template-columns: 100px repeat(3, 1fr); }
+            .vc-matrix > :nth-child(n+5):nth-child(-n+7) { display: none; }
+            .progression { grid-template-columns: 1fr; }
+            .prg-arrow { transform: rotate(90deg); }
+        }
+        @media (max-width: 768px) {
+            .g3, .g4, .data-grid, .impact-grid { grid-template-columns: 1fr 1fr; }
+            .about-grid { grid-template-columns: 1fr; }
+            .case-layout { grid-template-columns: 1fr; }
+            .cmp { grid-template-columns: 60px 1fr 1fr; }
+            .fw-vertical { grid-template-columns: 1fr; height: auto; }
+            .mtable { grid-template-columns: 1fr; }
+            .close-grid { grid-template-columns: 1fr; }
+            .close-right { display: none; }
+            .nitem { grid-template-columns: 40px 1fr; }
+            .nitem-d { grid-column: 1 / -1; }
+            .layer { grid-template-columns: 1fr; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress" id="prog"></div>
+
+<!-- ===================== SLIDE 1: TITLE ===================== -->
+<section class="slide t-dark title-slide">
+    <div class="title-dot"></div>
+    <div class="slide-body">
+        <div class="title-brand r">INSCEND AI</div>
+        <h1 class="title-h1 r">AI in <i>Compliance</i></h1>
+        <p class="title-sub r">From cost center to strategic advantage. A perspective on where AI fits across the compliance value chain, and how to get your organization ready.</p>
+        <div class="title-meta r">
+            <span>Malik Alatshan</span>
+            <span>Founder & CEO, Inscend AI</span>
+            <span>2026</span>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 2: ABOUT ME ===================== -->
+<section class="slide">
+    <div class="about-grid">
+
+        <!-- LEFT: Dark panel -->
+        <div class="about-left">
+            <div class="about-top-label">About the Speaker</div>
+            <div class="about-name">Malik<br>Alatshan</div>
+            <div class="about-role">Founder & Chief Executive Officer</div>
+            <div class="about-org">Inscend AI · Toronto, Canada</div>
+            <div class="about-stats">
+                <div class="stat"><div class="stat-num">20</div><div class="stat-label">Years in<br>Strategy & Ops</div></div>
+                <div class="stat"><div class="stat-num">6</div><div class="stat-label">Service<br>Lines</div></div>
+                <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Countries<br>Served</div></div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Cream panel with timeline -->
+        <div class="about-right">
+            <div class="about-right-label">Career Journey</div>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div>
+                        <div class="tl-label">Present</div>
+                        <div class="tl-title">Founder & Chief Executive Officer</div>
+                        <div class="tl-sub">Inscend AI · 2025 to Present · Toronto, Canada</div>
+                        <div class="tl-desc">AI automation agency serving wealth management, compliance, legal, and professional services firms across North America and the Middle East. Six service lines spanning AI strategy, custom agents, workflow automation, consulting, training, and ongoing support.</div>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div>
+                        <div class="tl-label">Capital Markets</div>
+                        <div class="tl-title">VP, Productivity & Efficiency and Business Management</div>
+                        <div class="tl-sub">RBC Capital Markets · 2022 to 2024</div>
+                        <div class="tl-desc">Managed $600M in annual vendor spend and captured $20M in savings. Launched the $120M Significant Risk Transfer program. Transitioned the 1,600 person COO Group to OKRs.</div>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div>
+                        <div class="tl-label">Enterprise Strategy</div>
+                        <div class="tl-title">Senior Manager, Strategy & Transformation</div>
+                        <div class="tl-sub">Royal Bank of Canada · 2018 to 2021</div>
+                        <div class="tl-desc">Data strategy for Personal & Commercial Banking, Payments, and Home Equity Finance. Introduced zero based budgeting with McKinsey to the Savings & Investment segment.</div>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div>
+                        <div class="tl-label">Consulting</div>
+                        <div class="tl-title">Senior Consultant</div>
+                        <div class="tl-sub">Ernst & Young · 2016 to 2018 · Houston & Toronto</div>
+                        <div class="tl-desc">Value chain analysis and pricing strategy for global technology companies and a publicly listed corporation in Saudi Arabia.</div>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div>
+                        <div class="tl-label">Education</div>
+                        <div class="tl-title">M.S. Finance · MBA (Fulbright Scholar)</div>
+                        <div class="tl-sub">Texas A&M University · Case Western Reserve University</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-advisory-block">
+                <div class="about-advisory-label">Select Advisory Engagements</div>
+                <div class="adv-list">
+                    <div class="adv-item">
+                        <div class="adv-year">2026</div>
+                        <div class="adv-detail"><strong>Human capital strategy</strong> · Ministry of Industry and Mineral Resources, Saudi Arabia</div>
+                    </div>
+                    <div class="adv-item">
+                        <div class="adv-year">2025</div>
+                        <div class="adv-detail"><strong>Tourism strategy</strong> · Ministry of Interior, Saudi Arabia</div>
+                    </div>
+                    <div class="adv-item">
+                        <div class="adv-year">2024</div>
+                        <div class="adv-detail"><strong>Reconstruction fund financial architecture</strong> · Palestine</div>
+                    </div>
+                    <div class="adv-item">
+                        <div class="adv-year">2020</div>
+                        <div class="adv-detail"><strong>Skills for trade and economic diversification</strong> · International Labour Organization, Jordan</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-links-row">
+                <a href="https://inscendai.com" target="_blank">inscendai.com</a>
+                <a href="https://linkedin.com/in/alatshanmalik" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 3: AGENDA ===================== -->
+<section class="slide t-dark">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Agenda</div>
+        <h2 class="heading r">What We'll <i>Cover</i></h2>
+        <div class="agenda">
+            <div class="ag-item r">
+                <div class="ag-num">01</div>
+                <div class="ag-center">
+                    <div class="ag-title">The <i>Shift</i></div>
+                    <div class="ag-desc">Why compliance has reached an inflection point, and why AI readiness is no longer optional.</div>
+                </div>
+                <div class="ag-marker"></div>
+            </div>
+            <div class="ag-item r">
+                <div class="ag-num">02</div>
+                <div class="ag-center">
+                    <div class="ag-title">The Two Faces of <i>AI</i></div>
+                    <div class="ag-desc">Generative AI assists. Agentic AI acts. Understanding both is essential for modern compliance leadership.</div>
+                </div>
+                <div class="ag-marker"></div>
+            </div>
+            <div class="ag-item r">
+                <div class="ag-num">03</div>
+                <div class="ag-center">
+                    <div class="ag-title">AI Across the <i>Compliance Value Chain</i></div>
+                    <div class="ag-desc">A layered view of the compliance function, with concrete AI opportunities at every stage and their impact on revenue, cost, quality, and flexibility.</div>
+                </div>
+                <div class="ag-marker"></div>
+            </div>
+            <div class="ag-item r">
+                <div class="ag-num">04</div>
+                <div class="ag-center">
+                    <div class="ag-title">The Readiness <i>Playbook</i></div>
+                    <div class="ag-desc">People, data, framework, and metrics. The four pillars of getting your organization AI ready.</div>
+                </div>
+                <div class="ag-marker"></div>
+            </div>
+            <div class="ag-item r">
+                <div class="ag-num">05</div>
+                <div class="ag-center">
+                    <div class="ag-title">From <i>Adoption</i> to <i>Transformation</i></div>
+                    <div class="ag-desc">The common pitfalls, and what separates organizations that transform from those that merely adopt.</div>
+                </div>
+                <div class="ag-marker"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 4: SECTION 01 DIVIDER ===================== -->
+<section class="slide t-dark divider">
+    <div class="divider-inner r">
+        <div class="label">Section 01</div>
+        <h2 class="divider-title">The <i>Shift</i></h2>
+        <div class="divider-line"></div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 5: THE SHIFT (with waves) ===================== -->
+<section class="slide t-cream">
+    <div class="bar"></div>
+
+    <!-- Animated wave background -->
+    <div class="waves-wrap">
+        <svg viewBox="0 0 1440 400" preserveAspectRatio="none">
+            <path class="wave-path w1" d="M-50,200 Q360,120 720,200 T1490,200" stroke="rgba(72,151,247,0.25)" stroke-width="1.2"/>
+            <path class="wave-path w2" d="M-50,250 Q360,180 720,250 T1490,250" stroke="rgba(72,151,247,0.18)" stroke-width="1"/>
+            <path class="wave-path w3" d="M-50,300 Q360,240 720,300 T1490,300" stroke="rgba(72,151,247,0.12)" stroke-width="1"/>
+            <path class="wave-path w1" d="M-50,350 Q360,300 720,350 T1490,350" stroke="rgba(72,151,247,0.08)" stroke-width="1"/>
+        </svg>
+    </div>
+
+    <div class="slide-body">
+        <div class="label r">Section 01</div>
+        <h2 class="heading r">The Compliance Landscape Is <i>Shifting</i></h2>
+        <div class="insight r"><strong>Three pressures are compounding at once:</strong> regulatory complexity is rising, headcount is constrained, and boards want more from less. AI is the only lever that scales across all three.</div>
+        <div class="g g3 r">
+            <div class="c c-outline">
+                <div class="c-lbl">Regulatory Volume</div>
+                <div class="c-title">Rules Outpacing Review</div>
+                <div class="c-dim">Rule changes are accelerating globally. Manual horizon scanning cannot keep pace, and teams are falling behind before they know what changed.</div>
+            </div>
+            <div class="c c-blue">
+                <div class="c-lbl">Cost Pressure</div>
+                <div class="c-dim" style="font-family: var(--fse); font-style: italic; font-size: clamp(1rem, 1.9vw, 1.4rem); font-weight: 400; line-height: 1.2; color: white;">Do more with less.</div>
+                <div class="c-dim">Compliance budgets are scrutinized quarterly. Leaders are asked to deliver more monitoring, testing, and reporting without proportional headcount.</div>
+            </div>
+            <div class="c c-dark">
+                <div class="c-lbl">Expectation Gap</div>
+                <div class="c-title">From Backward to Forward</div>
+                <div class="c-dim">Boards and regulators expect proactive risk intelligence, not backward looking checklists. The bar has moved. Most teams haven't.</div>
+            </div>
+        </div>
+    </div>
+    <div class="callout r"><strong>The question isn't whether AI will reach compliance.</strong> <em>It's whether your team will lead the adoption, or react to it.</em></div>
+</section>
+
+<!-- ===================== SLIDE 6: SECTION 02 DIVIDER ===================== -->
+<section class="slide t-dark divider">
+    <div class="divider-inner r">
+        <div class="label">Section 02</div>
+        <h2 class="divider-title">The Two Faces of <i>AI</i></h2>
+        <div class="divider-line"></div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 7: GEN AI vs AGENTIC ===================== -->
+<section class="slide t-cream">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 02</div>
+        <h2 class="heading r">Generative AI vs. <i>Agentic AI</i></h2>
+        <div class="g g2 r">
+            <div class="c c-outline">
+                <div class="c-lbl">Generative AI</div>
+                <div class="c-title">AI Assists</div>
+                <div class="c-dim">Creates content such as text, summaries, and drafts in direct response to a prompt. Reactive. The human drives every step.</div>
+                <div class="tags">
+                    <span class="tag tag-o">Reactive</span>
+                    <span class="tag tag-o">Human in the loop</span>
+                    <span class="tag tag-o">Single turn</span>
+                </div>
+                <div class="c-foot" style="border-top: none;"><strong style="font-style:normal; display:block; margin-bottom:2px;">Skills needed:</strong> Prompt engineering, output evaluation, hallucination awareness</div>
+                <div class="c-dim" style="margin-top:auto; font-style:italic; opacity:0.6;">Examples: ChatGPT, Copilot, Claude</div>
+            </div>
+            <div class="c c-dark">
+                <div class="c-lbl">Agentic AI</div>
+                <div class="c-title">AI Acts</div>
+                <div class="c-dim">Takes sequential actions, makes decisions, and pursues goals autonomously with minimal human intervention per step.</div>
+                <div class="tags">
+                    <span class="tag tag-b">Proactive</span>
+                    <span class="tag tag-b">Autonomous</span>
+                    <span class="tag tag-b">Multi step</span>
+                </div>
+                <div class="c-foot" style="border-top: none;"><strong style="font-style:normal; display:block; margin-bottom:2px;">Skills needed:</strong> Oversight design, governance, trust calibration, workflow redesign</div>
+                <div class="c-dim" style="margin-top:auto; font-style:italic; opacity:0.6;">Examples: AI agents that monitor, escalate, and file autonomously</div>
+            </div>
+        </div>
+    </div>
+    <div class="callout r"><strong>Why this matters for compliance:</strong> <em>Agentic AI is not a future trend. It's arriving now. Your team needs to understand not just how to use AI, but how to supervise it.</em></div>
+</section>
+
+<!-- ===================== SLIDE 8: SECTION 03 DIVIDER ===================== -->
+<section class="slide t-dark divider">
+    <div class="divider-inner r">
+        <div class="label">Section 03</div>
+        <h2 class="divider-title">AI Across the <i>Compliance Value Chain</i></h2>
+        <div class="divider-line"></div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 9: VALUE CHAIN DISSECTED (MATRIX) ===================== -->
+<section class="slide t-cream">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 03</div>
+        <h2 class="heading r">The Compliance Value Chain, <i>Dissected</i></h2>
+        <div class="insight r">Six stages. Three layers. Every cell is an opportunity to move from manual effort to intelligent automation.</div>
+
+        <div class="vc-matrix r">
+            <!-- HEADER ROW -->
+            <div class="vc-head vc-head-corner"></div>
+            <div class="vc-head">Regulatory<br>Intelligence</div>
+            <div class="vc-head">Policy<br>Management</div>
+            <div class="vc-head">Risk<br>Assessment</div>
+            <div class="vc-head">Monitoring<br>& Testing</div>
+            <div class="vc-head">Reporting<br>& Remediation</div>
+            <div class="vc-head">Training<br>& Culture</div>
+
+            <!-- TODAY ROW -->
+            <div class="vc-row vc-row-today">
+                <div class="vc-rowlabel">Today</div>
+                <div class="vc-cell">Manual horizon scanning of bulletins</div>
+                <div class="vc-cell">Quarterly drafting cycles, version drift</div>
+                <div class="vc-cell">Static risk registers updated annually</div>
+                <div class="vc-cell">Periodic sampling, lagging alerts</div>
+                <div class="vc-cell">Manual filing, spreadsheet tracking</div>
+                <div class="vc-cell">Annual training, one size fits all</div>
+            </div>
+
+            <!-- AI OPPORTUNITY ROW -->
+            <div class="vc-row vc-row-ai">
+                <div class="vc-rowlabel">AI Opportunity</div>
+                <div class="vc-cell">Regulatory Radar Agent, auto classification</div>
+                <div class="vc-cell">Policy Lifecycle Agent, version intelligence</div>
+                <div class="vc-cell">Dynamic risk scoring, predictive modeling</div>
+                <div class="vc-cell">Real time anomaly detection, auto routing</div>
+                <div class="vc-cell">Auto generated filings, remediation tracking</div>
+                <div class="vc-cell">Adaptive Coach Agent, role specific learning</div>
+            </div>
+
+            <!-- OUTCOME ROW -->
+            <div class="vc-row vc-row-out">
+                <div class="vc-rowlabel">Impact</div>
+                <div class="vc-cell">Hours, not weeks</div>
+                <div class="vc-cell">No more shelfware policies</div>
+                <div class="vc-cell">Living risk intelligence</div>
+                <div class="vc-cell">Catches what sampling misses</div>
+                <div class="vc-cell">40 to 60% cycle time cut</div>
+                <div class="vc-cell">Continuous, not annual</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 10: TODAY → AI → OPPORTUNITY ===================== -->
+<section class="slide t-cream">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 03</div>
+        <h2 class="heading r">Today, <i>Tomorrow</i>, and the Opportunity</h2>
+        <div class="insight r">The shift isn't theoretical. It's a progression from where compliance is stuck today, through what AI unlocks, to the strategic outcome on the other side.</div>
+
+        <div class="progression r">
+            <div class="prg-block prg-1">
+                <div class="prg-lbl">Today</div>
+                <div class="prg-title">Reactive & Manual</div>
+                <div class="prg-body">Analysts spend 60 to 80% of their time gathering data, not applying judgment. Risk is a backward looking exercise. Reporting catches up with reality; it does not anticipate it.</div>
+            </div>
+            <div class="prg-arrow">→</div>
+            <div class="prg-block prg-2">
+                <div class="prg-lbl">AI Intervention</div>
+                <div class="prg-title">Continuous & Intelligent</div>
+                <div class="prg-body">Agents monitor, draft, score, and escalate around the clock. Data flows through AI layers that surface patterns humans miss. Humans move up the value chain.</div>
+            </div>
+            <div class="prg-arrow">→</div>
+            <div class="prg-block prg-3">
+                <div class="prg-lbl">Opportunity</div>
+                <div class="prg-title">Proactive Risk Intelligence</div>
+                <div class="prg-body">Compliance shifts from a cost center to a strategic function. Fewer people doing more meaningful work. Faster cycles, fewer surprises, stronger regulatory standing.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 11: UPSTREAM CASES ===================== -->
+<section class="slide t-dark">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 03</div>
+        <h2 class="heading r">AI Opportunities: <i>Upstream</i></h2>
+        <div class="select-note r">Select examples · Not exhaustive</div>
+
+        <div class="case-layout r">
+            <!-- LEFT: Cases -->
+            <div class="cases">
+                <div class="case-card">
+                    <div class="case-num">01</div>
+                    <div>
+                        <div class="case-lbl">Regulatory Intelligence</div>
+                        <div class="case-title">Regulatory Radar Agent</div>
+                        <div class="case-desc">Continuously scans regulatory feeds, extracts rule changes, maps them to internal policies, and flags impact by business line before your team reads the bulletin.</div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-num">02</div>
+                    <div>
+                        <div class="case-lbl">Policy Management</div>
+                        <div class="case-title">Policy Lifecycle Agent</div>
+                        <div class="case-desc">Drafts policy updates from regulatory changes, tracks version history, identifies gaps between policy and procedure, and routes approvals. Cuts manual review cycles in half.</div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-num">03</div>
+                    <div>
+                        <div class="case-lbl">Risk Assessment</div>
+                        <div class="case-title">Risk Scoring Engine</div>
+                        <div class="case-desc">Ingests data from multiple systems, applies dynamic risk models, surfaces emerging risk clusters, and recommends control adjustments continuously, not quarterly.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Takeaway -->
+            <div class="takeaway">
+                <div class="takeaway-lbl">The Takeaway</div>
+                <div class="takeaway-body">"Every dollar invested upstream saves five to ten times that in downstream remediation."</div>
+                <div class="takeaway-stat">
+                    <div class="takeaway-stat-big">5–10×</div>
+                    <div class="takeaway-stat-lbl">ROI on upstream intelligence vs downstream fixes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 12: DOWNSTREAM CASES ===================== -->
+<section class="slide t-cream">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 03</div>
+        <h2 class="heading r">AI Opportunities: <i>Downstream</i></h2>
+        <div class="select-note r">Select examples · Not exhaustive</div>
+
+        <div class="case-layout r">
+            <!-- LEFT: Cases -->
+            <div class="cases">
+                <div class="case-card">
+                    <div class="case-num">04</div>
+                    <div>
+                        <div class="case-lbl">Monitoring & Testing</div>
+                        <div class="case-title">Anomaly Detection Agent</div>
+                        <div class="case-desc">Monitors transactions in real time, flags irregularities, drafts exception reports, and routes them to the right reviewer. Continuously, without manual review cycles.</div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-num">05</div>
+                    <div>
+                        <div class="case-lbl">Reporting & Remediation</div>
+                        <div class="case-title">Compliance Reporting Agent</div>
+                        <div class="case-desc">Auto generates regulatory filings, exception summaries, and board level reports. Tracks remediation status and escalates overdue items, keeping audit trails clean without manual effort.</div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-num">06</div>
+                    <div>
+                        <div class="case-lbl">Training & Culture</div>
+                        <div class="case-title">Compliance Coach Agent</div>
+                        <div class="case-desc">Delivers role specific micro training, generates scenario based assessments, tracks completion, and identifies knowledge gaps. Adaptive, not annual.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Takeaway -->
+            <div class="takeaway">
+                <div class="takeaway-lbl">The Takeaway</div>
+                <div class="takeaway-body">"When AI spans the full chain, returns compound. Faster detection, cleaner reporting, and culture that sticks."</div>
+                <div class="takeaway-stat">
+                    <div class="takeaway-stat-big">40–60%</div>
+                    <div class="takeaway-stat-lbl">reduction in reporting cycle time, measured across early deployments</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 13: IMPACT MATRIX ===================== -->
+<section class="slide t-dark">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 03</div>
+        <h2 class="heading r">Impact Across <i>Four Dimensions</i></h2>
+        <div class="insight r">AI in compliance isn't just cost reduction. The compelling case spans <strong>revenue protection, cost optimization, quality uplift, and organizational flexibility.</strong></div>
+
+        <div class="impact-grid r">
+            <div class="imp-card imp-1">
+                <div class="imp-lbl">Revenue</div>
+                <div class="imp-verb">Protect.</div>
+                <div class="imp-body">Faster regulatory clearance accelerates product launches. Proactive risk intelligence protects revenue streams before incidents occur. Compliance becomes a market differentiator.</div>
+            </div>
+            <div class="imp-card imp-2">
+                <div class="imp-lbl">Cost</div>
+                <div class="imp-verb">Optimize.</div>
+                <div class="imp-body">Automate 40 to 60% of manual compliance tasks. Reduce reliance on external counsel for routine regulatory questions. Cut reporting cycle time and reallocate capacity.</div>
+            </div>
+            <div class="imp-card imp-3">
+                <div class="imp-lbl">Quality</div>
+                <div class="imp-verb">Elevate.</div>
+                <div class="imp-body">Eliminate false negatives in surveillance. Ensure consistent policy application across jurisdictions. AI driven testing catches what periodic sampling misses.</div>
+            </div>
+            <div class="imp-card imp-4">
+                <div class="imp-lbl">Flexibility</div>
+                <div class="imp-verb">Scale.</div>
+                <div class="imp-body">Scale compliance capacity without proportional headcount growth. Adapt to new regulations faster. Deploy monitoring for new products, markets, or jurisdictions in weeks.</div>
+            </div>
+        </div>
+    </div>
+    <div class="callout r"><strong>The strongest business case combines all four.</strong> <em>Cost savings get attention. Revenue protection and quality uplift earn executive sponsorship.</em></div>
+</section>
+
+<!-- ===================== SLIDE 14: SECTION 04 DIVIDER ===================== -->
+<section class="slide t-dark divider">
+    <div class="divider-inner r">
+        <div class="label">Section 04</div>
+        <h2 class="divider-title">The Readiness <i>Playbook</i></h2>
+        <div class="divider-line"></div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 15: AI READY — STACKED LAYERS ===================== -->
+<section class="slide t-cream">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 04</div>
+        <h2 class="heading r">What <i>"AI Ready"</i> Really Means</h2>
+        <div class="insight r"><strong>Reframe:</strong> AI readiness is not about tools. It starts with people, built layer by layer from foundational awareness to enterprise capability.</div>
+
+        <div class="layers r">
+            <div class="layer layer-3">
+                <div class="layer-badge">
+                    <div class="layer-badge-n">Layer 03</div>
+                    <div class="layer-badge-t">Capability</div>
+                </div>
+                <div class="layer-body">
+                    <div class="layer-body-t"><strong>Building, deploying, or governing AI solutions</strong> at the team, department, or enterprise level. This is where compliance functions take ownership and lead.</div>
+                    <div class="layer-body-ex">Deploying an AI agent for surveillance. Designing governance for autonomous workflows.</div>
+                </div>
+            </div>
+            <div class="layer layer-2">
+                <div class="layer-badge">
+                    <div class="layer-badge-n">Layer 02</div>
+                    <div class="layer-badge-t">Fluency</div>
+                </div>
+                <div class="layer-body">
+                    <div class="layer-body-t"><strong>Using AI tools effectively in daily work.</strong> Prompting well, evaluating outputs, integrating into workflows. Moving from curiosity to daily competence.</div>
+                    <div class="layer-body-ex">Writing effective prompts for policy drafts. Using Copilot to summarize regulatory updates.</div>
+                </div>
+            </div>
+            <div class="layer layer-1">
+                <div class="layer-badge">
+                    <div class="layer-badge-n">Layer 01</div>
+                    <div class="layer-badge-t">Awareness</div>
+                </div>
+                <div class="layer-body">
+                    <div class="layer-body-t"><strong>Understanding what AI can and cannot do.</strong> Knowing its limits, risks, and possibilities so your teams make informed decisions about where it belongs.</div>
+                    <div class="layer-body-ex">Completing an AI literacy course. Knowing when AI outputs need verification.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="callout r"><strong>The goal isn't to make everyone an AI engineer.</strong> <em>It's to move every person at least one layer up, and ensure no one stays unaware.</em></div>
+</section>
+
+<!-- ===================== SLIDE 16: DATA READINESS ===================== -->
+<section class="slide t-dark">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 04</div>
+        <h2 class="heading r">Getting Your Data Ready for <i>AI</i></h2>
+        <div class="insight r"><strong>Garbage in, garbage out,</strong> at scale. Once your people are ready, your data is the next foundation. Skip this, and you pay for it twice.</div>
+        <div class="data-grid r">
+            <div class="c c-outline">
+                <div class="c-num">01</div>
+                <div class="c-title">Accessibility</div>
+                <div class="c-q">Can your systems talk to each other?</div>
+                <div class="c-dim">Data locked in silos cannot power AI that needs the full picture. Breaking silos is step one.</div>
+            </div>
+            <div class="c c-outline">
+                <div class="c-num">02</div>
+                <div class="c-title">Quality</div>
+                <div class="c-q">Is your data accurate, consistent, complete?</div>
+                <div class="c-dim">AI amplifies whatever is in the data, good or bad. Clean data is a competitive advantage.</div>
+            </div>
+            <div class="c c-outline">
+                <div class="c-num">03</div>
+                <div class="c-title">Governance</div>
+                <div class="c-q">Who owns the data, and who can use it?</div>
+                <div class="c-dim">Governance is not bureaucracy. It's protection, accountability, and trust at scale.</div>
+            </div>
+            <div class="c c-outline">
+                <div class="c-num">04</div>
+                <div class="c-title">Structure</div>
+                <div class="c-q">Is your data organized for AI consumption?</div>
+                <div class="c-dim">Unstructured data isn't unusable. But it requires deliberate architecture and a clear plan.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 17: FRAMEWORK ===================== -->
+<section class="slide t-cream">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 04</div>
+        <h2 class="heading r">The Five Step <i>Framework</i></h2>
+        <div class="fw-vertical r">
+            <div class="fw-step">
+                <div class="fw-num">01</div>
+                <div class="fw-title">Assess</div>
+                <div class="fw-desc">Know where your compliance function is today. Audit skills, tools, and data maturity across the organization.</div>
+            </div>
+            <div class="fw-step">
+                <div class="fw-num">02</div>
+                <div class="fw-title">Segment</div>
+                <div class="fw-desc">Different roles need different paths. CCOs, analysts, and frontline staff each have unique readiness gaps.</div>
+            </div>
+            <div class="fw-step">
+                <div class="fw-num">03</div>
+                <div class="fw-title">Upskill</div>
+                <div class="fw-desc">Deploy targeted, role specific learning pathways. Continuously updated, not a one time workshop.</div>
+            </div>
+            <div class="fw-step">
+                <div class="fw-num">04</div>
+                <div class="fw-title">Embed</div>
+                <div class="fw-desc">Make AI habits stick through culture and workflow integration. Learning stays in the room, not just the training.</div>
+            </div>
+            <div class="fw-step">
+                <div class="fw-num">05</div>
+                <div class="fw-title">Measure</div>
+                <div class="fw-desc">Track leading and lagging indicators. Define success before you start, not after you finish.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 18: MEASURE (Leading prominent) ===================== -->
+<section class="slide t-cream">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 04</div>
+        <h2 class="heading r">What <i>"Measure"</i> Actually Looks Like</h2>
+        <div class="insight r"><strong>Leading indicators predict the future, lagging indicators confirm the past.</strong> The strongest compliance programs weight both, but act on the leading ones first.</div>
+
+        <div class="mtable r">
+            <!-- LEADING — emphasized -->
+            <div class="mcol mcol-leading">
+                <div class="mcol-head">
+                    <div class="mcol-head-t">Leading Indicators</div>
+                    <div class="mcol-head-sub">Predict readiness. Act on these now.</div>
+                </div>
+                <div class="mcol-item">
+                    <div class="mcol-item-t">% of compliance staff completing AI training by role</div>
+                    <div class="mcol-item-d">Shows whether segmented upskilling is reaching the right people.</div>
+                </div>
+                <div class="mcol-item">
+                    <div class="mcol-item-t">AI tools actively used per team per week</div>
+                    <div class="mcol-item-d">Distinguishes purchased licenses from embedded workflows.</div>
+                </div>
+                <div class="mcol-item">
+                    <div class="mcol-item-t">Managers who can articulate a specific AI use case</div>
+                    <div class="mcol-item-d">The clearest signal the change layer owns the mission.</div>
+                </div>
+                <div class="mcol-item">
+                    <div class="mcol-item-t">AI experiments or pilots initiated per quarter</div>
+                    <div class="mcol-item-d">Measures whether curiosity is converting into action.</div>
+                </div>
+            </div>
+
+            <!-- LAGGING — neutral -->
+            <div class="mcol mcol-lagging">
+                <div class="mcol-head">
+                    <div class="mcol-head-t">Lagging Indicators</div>
+                    <div class="mcol-head-sub">Confirm outcomes. Measure over time.</div>
+                </div>
+                <div class="mcol-item">
+                    <div class="mcol-item-t">Productivity delta in AI augmented vs. non augmented roles</div>
+                    <div class="mcol-item-d">Quantifies the actual output lift attributable to AI.</div>
+                </div>
+                <div class="mcol-item">
+                    <div class="mcol-item-t">Reduction in time on low judgment, repeatable tasks</div>
+                    <div class="mcol-item-d">Tracks whether AI frees people for higher value work.</div>
+                </div>
+                <div class="mcol-item">
+                    <div class="mcol-item-t">Decision cycle time for AI assisted processes</div>
+                    <div class="mcol-item-d">Measures whether AI accelerates the business.</div>
+                </div>
+                <div class="mcol-item">
+                    <div class="mcol-item-t">Employee confidence using AI for core job tasks</div>
+                    <div class="mcol-item-d">Validates whether training translated to real capability.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 19: SECTION 05 DIVIDER ===================== -->
+<section class="slide t-dark divider">
+    <div class="divider-inner r">
+        <div class="label">Section 05</div>
+        <h2 class="divider-title">From <i>Adoption</i> to <i>Transformation</i></h2>
+        <div class="divider-line"></div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 20: PITFALLS ===================== -->
+<section class="slide t-cream">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 05</div>
+        <h2 class="heading r">Common Pitfalls & How to <i>Avoid Them</i></h2>
+        <div class="nlist r">
+            <div class="nitem"><div class="nitem-n">01</div><div class="nitem-t">Buying Tools Before Building Skills</div><div class="nitem-d">Run a skills baseline before any technology purchase. Tools without capability create expensive shelfware.</div></div>
+            <div class="nitem"><div class="nitem-n">02</div><div class="nitem-t">One Size Fits All Training</div><div class="nitem-d">Design role specific learning paths. A CCO and a surveillance analyst need fundamentally different AI fluency.</div></div>
+            <div class="nitem"><div class="nitem-n">03</div><div class="nitem-t">Treating AI as an IT Initiative</div><div class="nitem-d">Anchor AI readiness in business outcomes, not technology deployment. IT enables. The business leads.</div></div>
+            <div class="nitem"><div class="nitem-n">04</div><div class="nitem-t">Ignoring Middle Management</div><div class="nitem-d">Make managers the first wave of upskilling. They translate strategy into daily behavior for their teams.</div></div>
+            <div class="nitem"><div class="nitem-n">05</div><div class="nitem-t">Mistaking Adoption for Transformation</div><div class="nitem-d">Measure outcomes, not usage. People using a tool is adoption. People changing how they work is transformation.</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 21: TRANSFORMATION COMPARISON ===================== -->
+<section class="slide t-cream">
+    <div class="bar"></div>
+    <div class="slide-body">
+        <div class="label r">Section 05</div>
+        <h2 class="heading r">What Transformation <i>Actually</i> Looks Like</h2>
+        <div class="cmp r">
+            <div class="cmp-corner"></div>
+            <div class="cmp-ha">Organization A · Adopted AI</div>
+            <div class="cmp-hb">Organization B · Transformed with AI</div>
+
+            <div class="cmp-label">What They Did</div>
+            <div class="cmp-cell">Deployed an AI compliance tool to 200 analysts. Ran a 2 hour onboarding. Tracked license utilization.</div>
+            <div class="cmp-cell cmp-cell-b">Same tools. Started with role specific use cases, trained managers first, embedded AI into existing workflows.</div>
+
+            <div class="cmp-label">6 Months Later</div>
+            <div class="cmp-cell">22% of licenses actively used. Analysts unsure how the tool fits their work. Managers not involved.</div>
+            <div class="cmp-cell cmp-cell-b">74% active usage. Analysts can name three or more tasks AI handles. Managers champion the change.</div>
+
+            <div class="cmp-label">Business Outcome</div>
+            <div class="cmp-cell">No measurable productivity change. Significant tool spend. Leadership questioning AI ROI.</div>
+            <div class="cmp-cell cmp-cell-b">28% reduction in time on repeatable tasks. Decision cycles shortened. Teams doing more with same headcount.</div>
+
+            <div class="cmp-label">Root Cause</div>
+            <div class="cmp-cell">Tool without context. Training without embedding. Adoption without behavior change.</div>
+            <div class="cmp-cell cmp-cell-b">Strategy before tools. Culture alongside capability. Measurement tied to outcomes, not logins.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SLIDE 22: CLOSING ===================== -->
+<section class="slide t-dark">
+    <!-- Waves span across full slide -->
+    <div class="close-waves">
+        <svg viewBox="0 0 1440 800" preserveAspectRatio="none">
+            <path d="M-50,280 Q240,200 480,280 T960,280 T1490,280" fill="none" stroke="rgba(72,151,247,0.14)" stroke-width="1"/>
+            <path d="M-50,360 Q240,285 480,360 T960,360 T1490,360" fill="none" stroke="rgba(72,151,247,0.11)" stroke-width="1"/>
+            <path d="M-50,440 Q240,370 480,440 T960,440 T1490,440" fill="none" stroke="rgba(72,151,247,0.08)" stroke-width="1"/>
+            <path d="M-50,520 Q240,455 480,520 T960,520 T1490,520" fill="none" stroke="rgba(72,151,247,0.06)" stroke-width="1"/>
+            <path d="M-50,600 Q240,540 480,600 T960,600 T1490,600" fill="none" stroke="rgba(72,151,247,0.04)" stroke-width="1"/>
+            <path d="M-50,680 Q240,625 480,680 T960,680 T1490,680" fill="none" stroke="rgba(72,151,247,0.025)" stroke-width="1"/>
+        </svg>
+    </div>
+    <div class="close-grid">
+        <div class="close-left">
+            <h2 class="r" style="font-family: var(--fs); font-size: var(--title); font-weight: 600;">Thank You.</h2>
+            <p class="r" style="font-family: var(--fse); font-size: var(--h3); font-style: italic; color: var(--blue);">Questions?</p>
+            <div class="r" style="width: 50px; height: 2px; background: var(--blue);"></div>
+            <div class="r">
+                <div style="font-weight: 600; font-size: var(--body);">Malik Alatshan</div>
+                <div style="font-size: var(--small); color: var(--light-dim); margin-top: 3px;">Founder & CEO, Inscend AI</div>
+                <div style="font-size: var(--small); color: var(--light-dim);">Toronto, Canada · Dubai, UAE</div>
+            </div>
+            <div class="r" style="font-size: var(--small); color: var(--blue); margin-top: 4px;">
+                <a href="mailto:malatshan@inscendai.com" style="color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(72,151,247,0.4);">malatshan@inscendai.com</a><br>
+                <a href="tel:+14377784955" style="color: var(--blue); text-decoration: none;">+1 437 778 4955</a><br>
+                <a href="https://inscendai.com" target="_blank" rel="noopener" style="color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(72,151,247,0.4);">inscendai.com</a>
+                ·
+                <a href="https://linkedin.com/in/alatshanmalik" target="_blank" rel="noopener" style="color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(72,151,247,0.4);">linkedin.com/in/alatshanmalik</a>
+            </div>
+        </div>
+        <div class="close-right">
+            <div class="close-brand r">INSCEND <span>AI</span></div>
+        </div>
+    </div>
+</section>
+
+
+<!-- NAV -->
+<nav class="nav">
+    <button class="nav-btn" onclick="P.prev()">← Prev</button>
+    <span class="nav-count" id="nc">1 / 22</span>
+    <button class="nav-btn" onclick="P.next()">Next →</button>
+</nav>
+
+<script>
+class Pres {
+    constructor() {
+        this.sl = document.querySelectorAll('.slide');
+        this.cur = 0;
+        this.tot = this.sl.length;
+        this.io();
+        this.keys();
+        this.touch();
+        this.wheel();
+        this.sl[0].classList.add('vis');
+        this.upd();
+    }
+    io() {
+        const ob = new IntersectionObserver(es => {
+            es.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('vis');
+                    const i = [...this.sl].indexOf(e.target);
+                    if (i >= 0) { this.cur = i; this.upd(); }
+                }
+            });
+        }, { threshold: 0.5 });
+        this.sl.forEach(s => ob.observe(s));
+    }
+    keys() {
+        document.addEventListener('keydown', e => {
+            if (['ArrowDown','ArrowRight','Space','PageDown'].includes(e.code)) { e.preventDefault(); this.next(); }
+            else if (['ArrowUp','ArrowLeft','PageUp'].includes(e.code)) { e.preventDefault(); this.prev(); }
+        });
+    }
+    touch() {
+        let y = 0;
+        document.addEventListener('touchstart', e => { y = e.touches[0].clientY; }, { passive: true });
+        document.addEventListener('touchend', e => {
+            const d = y - e.changedTouches[0].clientY;
+            if (Math.abs(d) > 50) d > 0 ? this.next() : this.prev();
+        }, { passive: true });
+    }
+    wheel() {
+        let t = 0;
+        document.addEventListener('wheel', e => {
+            const n = Date.now();
+            if (n - t < 800) return;
+            t = n;
+            e.deltaY > 0 ? this.next() : e.deltaY < 0 ? this.prev() : null;
+        }, { passive: true });
+    }
+    go(i) {
+        if (i < 0 || i >= this.tot) return;
+        this.cur = i;
+        this.sl[i].scrollIntoView({ behavior: 'smooth' });
+        this.upd();
+    }
+    next() { this.go(this.cur + 1); }
+    prev() { this.go(this.cur - 1); }
+    upd() {
+        const c = document.getElementById('nc');
+        const p = document.getElementById('prog');
+        if (c) c.textContent = `${this.cur + 1} / ${this.tot}`;
+        if (p) p.style.width = `${((this.cur + 1) / this.tot) * 100}%`;
+    }
+}
+const P = new Pres();
+</script>
+</body>
+</html>
