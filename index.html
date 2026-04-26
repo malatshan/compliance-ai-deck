@@ -103,13 +103,24 @@
 
         /* Callout footer */
         .callout {
-            padding: clamp(0.55rem, 1.2vh, 0.95rem) var(--pad);
+            padding: clamp(0.55rem, 1.2vh, 0.95rem) var(--pad) clamp(1.6rem, 3.2vh, 2.4rem);
             font-size: var(--small); line-height: 1.5;
             background: var(--blue-soft); flex-shrink: 0;
             position: relative; z-index: 2;
         }
         .callout strong { font-weight: 600; }
         .callout em { font-family: var(--fse); }
+
+        /* ===================================================
+           CARD ILLUSTRATIONS (Slide 7 Gen AI vs Agentic)
+           =================================================== */
+        .card-illus {
+            height: clamp(40px, 7vh, 60px);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: clamp(0.4rem, 0.8vh, 0.7rem);
+            opacity: 0.85;
+        }
+        .card-illus svg { height: 100%; width: auto; max-width: 100%; }
 
         /* ===================================================
            GENERIC CARDS
@@ -503,20 +514,10 @@
             background: var(--line-light);
         }
         .vc-cell {
-            padding: clamp(0.5rem, 1.1vw, 0.9rem) clamp(0.4rem, 0.9vw, 0.8rem);
+            padding: clamp(0.5rem, 1.1vw, 0.9rem) clamp(0.6rem, 1.2vw, 1rem);
             background: var(--cream);
             font-size: var(--xs); line-height: 1.4;
-            display: flex; align-items: flex-start;
-            gap: 7px;
         }
-        .vc-cell::before {
-            content: ''; flex-shrink: 0;
-            width: 5px; height: 5px;
-            background: var(--blue);
-            margin-top: 6px;
-        }
-        .vc-row-ai .vc-cell::before { background: var(--dark); }
-        .vc-row-out .vc-cell::before { background: var(--blue); }
         .vc-head {
             background: var(--dark); color: var(--light);
             font-weight: 600; font-size: var(--xs);
@@ -668,9 +669,9 @@
             color: rgba(255,255,255,0.75);
         }
         .takeaway-body {
-            font-family: var(--fse); font-style: italic;
-            font-size: clamp(1.1rem, 2.2vw, 1.8rem);
-            font-weight: 400; line-height: 1.25;
+            font-family: var(--fs); font-weight: 500;
+            font-size: clamp(1rem, 1.8vw, 1.35rem);
+            line-height: 1.35;
         }
         .takeaway-stat {
             display: flex; align-items: baseline; gap: 0.5rem;
@@ -944,6 +945,416 @@
         .close-brand span { color: var(--blue); }
 
         /* ===================================================
+           INSCEND AI MISSION SLIDE
+           =================================================== */
+        .mission-grid {
+            display: grid; grid-template-columns: 42% 58%;
+            height: 100%;
+        }
+        .mission-left {
+            background: var(--dark); color: var(--light);
+            display: flex; flex-direction: column;
+            justify-content: center;
+            padding: clamp(1.8rem, 4vw, 4rem);
+            gap: clamp(0.6rem, 1.4vh, 1.2rem);
+            position: relative; overflow: hidden;
+        }
+        .mission-left::before {
+            content: ''; position: absolute;
+            width: 340px; height: 340px; border-radius: 50%;
+            background: radial-gradient(circle, var(--blue-glow) 0%, transparent 70%);
+            top: 30%; left: -20%;
+            pointer-events: none;
+        }
+        .mission-brand {
+            font-family: var(--fs); font-weight: 700;
+            font-size: var(--small); letter-spacing: 0.32em;
+            color: var(--blue); position: relative; z-index: 1;
+        }
+        .mission-headline {
+            font-family: var(--fs); font-weight: 600;
+            font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+            line-height: 1.1; letter-spacing: -0.01em;
+            position: relative; z-index: 1;
+            margin-top: clamp(0.3rem, 0.7vh, 0.6rem);
+        }
+        .mission-headline i {
+            font-family: var(--fse); font-weight: 400;
+            font-style: italic; color: var(--blue);
+        }
+        .mission-tagline {
+            font-family: var(--fse); font-style: italic;
+            font-size: clamp(1rem, 1.6vw, 1.3rem);
+            color: var(--blue); line-height: 1.35;
+            margin-top: clamp(0.2rem, 0.5vh, 0.5rem);
+            position: relative; z-index: 1;
+        }
+        .mission-line {
+            width: 44px; height: 2px; background: var(--blue);
+            margin-top: clamp(0.4rem, 1vh, 0.9rem);
+            position: relative; z-index: 1;
+        }
+        .mission-body {
+            font-size: var(--body); line-height: 1.6;
+            color: var(--light-dim);
+            margin-top: clamp(0.4rem, 1vh, 0.9rem);
+            max-width: 42ch; position: relative; z-index: 1;
+        }
+
+        .mission-right {
+            background: var(--cream); color: var(--ink);
+            padding: clamp(1.8rem, 4vw, 4rem) clamp(2rem, 4vw, 4.5rem);
+            display: flex; flex-direction: column;
+            justify-content: center; gap: clamp(0.8rem, 1.8vh, 1.5rem);
+            overflow: hidden;
+        }
+        .mission-right-label {
+            font-size: var(--xs); font-weight: 600;
+            letter-spacing: 0.24em; text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: clamp(0.2rem, 0.5vh, 0.4rem);
+        }
+        .mission-right-title {
+            font-family: var(--fs); font-weight: 600;
+            font-size: clamp(1.3rem, 2.3vw, 1.8rem);
+            line-height: 1.2; color: var(--ink);
+        }
+        .mission-pressure-list {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: clamp(0.6rem, 1.2vw, 1.1rem);
+            margin-top: clamp(0.4rem, 0.8vh, 0.7rem);
+        }
+        .pressure-card {
+            padding: clamp(0.8rem, 1.5vw, 1.3rem);
+            border-left: 3px solid var(--blue);
+            background: white;
+            border-radius: 0 6px 6px 0;
+            display: flex; flex-direction: column;
+            gap: clamp(0.2rem, 0.4vh, 0.35rem);
+        }
+        .pressure-card-t {
+            font-family: var(--fs); font-weight: 600;
+            font-size: var(--body); line-height: 1.25;
+            color: var(--ink);
+        }
+        .pressure-card-d {
+            font-size: var(--xs); line-height: 1.5;
+            color: var(--ink-dim);
+        }
+        .mission-close {
+            margin-top: clamp(0.5rem, 1.2vh, 1rem);
+            padding-top: clamp(0.5rem, 1.2vh, 1rem);
+            border-top: 1px solid var(--line-light);
+            font-size: var(--small); line-height: 1.55;
+            color: var(--ink-dim);
+        }
+        .mission-close strong { color: var(--ink); font-weight: 600; }
+
+        /* ===================================================
+           FOOTER COPYRIGHT
+           =================================================== */
+        .footer-mark {
+            position: absolute; bottom: clamp(6px, 1vh, 10px);
+            left: var(--pad);
+            font-size: clamp(0.5rem, 0.65vw, 0.62rem);
+            font-weight: 400; letter-spacing: 0.1em;
+            color: var(--ink-fade);
+            pointer-events: none;
+            z-index: 5;
+        }
+        .t-dark .footer-mark { color: rgba(245,246,250,0.3); }
+        .slide.divider .footer-mark { display: none; }
+
+        /* ===================================================
+           CLOSE ME SECTION (on closing slide)
+           =================================================== */
+        .close-me-block {
+            margin-top: clamp(0.8rem, 2vh, 1.5rem);
+            padding-top: clamp(0.8rem, 1.8vh, 1.4rem);
+            border-top: 1px solid var(--line-dark);
+        }
+        .close-me-label {
+            font-size: var(--xs); font-weight: 600;
+            letter-spacing: 0.24em; text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: clamp(0.3rem, 0.6vh, 0.5rem);
+        }
+        .close-me-name {
+            font-family: var(--fse); font-weight: 400;
+            font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+            line-height: 1.1;
+        }
+        .close-me-role {
+            font-size: var(--small); color: var(--light-dim);
+            margin-top: clamp(0.15rem, 0.3vh, 0.25rem);
+        }
+        .close-testimonials {
+            margin-top: clamp(0.6rem, 1.4vh, 1.1rem);
+            padding-top: clamp(0.6rem, 1.4vh, 1.1rem);
+            border-top: 1px solid var(--line-dark);
+            display: flex; flex-direction: column;
+            gap: clamp(0.5rem, 1vh, 0.8rem);
+        }
+        .close-test-label {
+            font-size: var(--xs); font-weight: 600;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--blue);
+        }
+        .close-client-list {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: clamp(0.3rem, 0.6vh, 0.5rem) clamp(0.8rem, 1.5vw, 1.3rem);
+            font-size: var(--xs);
+            color: var(--light-dim);
+            line-height: 1.5;
+        }
+        .close-client-list strong {
+            color: var(--light); font-weight: 500;
+        }
+
+        /* ===================================================
+           LEGAL FOOTNOTES (on closing slide)
+           =================================================== */
+        .legal-footnotes {
+            position: absolute; left: 0; right: 0; bottom: 0;
+            padding: clamp(0.5rem, 1.2vh, 1rem) var(--pad);
+            z-index: 4;
+        }
+        .legal-footnotes-grid {
+            max-width: 1400px; margin: 0 auto;
+        }
+        .lfn-item {
+            font-size: clamp(0.52rem, 0.7vw, 0.62rem);
+            line-height: 1.5;
+            color: rgba(245,246,250,0.4);
+            font-weight: 400;
+        }
+        .lfn-item strong {
+            color: rgba(245,246,250,0.55);
+            font-weight: 500;
+        }
+
+        /* ===================================================
+           LEGAL NOTICE SLIDE
+           =================================================== */
+        .legal-slide .slide-body {
+            justify-content: center;
+            max-width: 900px; margin: 0 auto;
+            gap: clamp(0.5rem, 1.2vh, 1rem);
+        }
+        .legal-label {
+            font-size: clamp(0.52rem, 0.72vw, 0.65rem);
+            font-weight: 500; letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(245,246,250,0.45);
+        }
+        .legal-heading {
+            font-family: var(--fs); font-weight: 500;
+            font-size: clamp(0.82rem, 1.25vw, 1.05rem);
+            line-height: 1.3; color: rgba(245,246,250,0.6);
+            letter-spacing: 0.02em;
+        }
+        .legal-block {
+            display: flex; flex-direction: column;
+            gap: 0;
+            margin-top: clamp(0.25rem, 0.6vh, 0.5rem);
+        }
+        .legal-item {
+            display: grid;
+            grid-template-columns: clamp(85px, 11vw, 125px) 1fr;
+            gap: clamp(0.6rem, 1.1vw, 1.1rem);
+            padding: clamp(0.3rem, 0.6vh, 0.5rem) 0;
+            border-bottom: 1px solid rgba(245,246,250,0.05);
+            align-items: baseline;
+        }
+        .legal-item:last-child { border-bottom: none; }
+        .legal-item-lbl {
+            font-size: clamp(0.5rem, 0.68vw, 0.6rem);
+            font-weight: 500; letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(245,246,250,0.45);
+        }
+        .legal-item-body {
+            font-size: clamp(0.58rem, 0.8vw, 0.7rem);
+            line-height: 1.5;
+            color: rgba(245,246,250,0.5);
+            font-weight: 400;
+        }
+        .legal-item-body strong {
+            color: rgba(245,246,250,0.65);
+            font-weight: 500;
+        }
+        .legal-item-body a {
+            color: rgba(245,246,250,0.6) !important;
+            border-bottom-color: rgba(245,246,250,0.15) !important;
+        }
+
+        /* ===================================================
+           MISSION SLIDE — EXPANDED
+           =================================================== */
+        .mission-services {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            gap: clamp(0.3rem, 0.6vw, 0.6rem);
+            margin-top: clamp(0.4rem, 0.8vh, 0.7rem);
+        }
+        .mission-service {
+            padding: clamp(0.5rem, 1vw, 0.8rem) clamp(0.5rem, 1vw, 0.9rem);
+            background: rgba(255,255,255,0.05);
+            border-left: 2px solid var(--blue);
+            border-radius: 0 4px 4px 0;
+        }
+        .mission-service-t {
+            font-size: var(--xs); font-weight: 600;
+            line-height: 1.25; color: var(--light);
+        }
+        .mission-service-d {
+            font-size: clamp(0.55rem, 0.72vw, 0.68rem);
+            color: var(--light-dim); margin-top: 2px;
+            line-height: 1.4;
+        }
+        .mission-credentials {
+            margin-top: clamp(0.5rem, 1vh, 0.9rem);
+            padding-top: clamp(0.5rem, 1vh, 0.9rem);
+            border-top: 1px solid var(--line-dark);
+            display: flex; gap: clamp(0.8rem, 1.8vw, 1.8rem);
+            flex-wrap: wrap; position: relative; z-index: 1;
+        }
+        .cred-item {
+            display: flex; flex-direction: column;
+            gap: 2px;
+        }
+        .cred-n {
+            font-family: var(--fs); font-weight: 600;
+            font-size: clamp(1rem, 1.8vw, 1.4rem);
+            color: var(--blue); line-height: 1;
+            letter-spacing: -0.01em;
+        }
+        .cred-l {
+            font-size: clamp(0.55rem, 0.7vw, 0.65rem);
+            color: var(--light-dim);
+            letter-spacing: 0.1em; text-transform: uppercase;
+        }
+
+        /* ===================================================
+           SLIDE PICKER
+           =================================================== */
+        .nav-count {
+            padding: clamp(0.3rem, 0.5vh, 0.45rem) clamp(0.5rem, 0.8vw, 0.65rem);
+            background: rgba(15,17,28,0.9); color: var(--light);
+            border-radius: 4px; backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            user-select: none;
+        }
+        .nav-count:hover {
+            background: rgba(72,151,247,0.2);
+            border-color: rgba(72,151,247,0.4);
+        }
+        .nav-count::before {
+            content: '☰ '; opacity: 0.5;
+            margin-right: 4px; font-size: 0.85em;
+        }
+
+        .slide-picker {
+            position: fixed;
+            bottom: clamp(2.5rem, 5vh, 3.5rem);
+            right: clamp(0.6rem, 1.2vw, 1rem);
+            width: clamp(260px, 32vw, 360px);
+            max-height: 70vh;
+            background: rgba(15,17,28,0.96);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(72,151,247,0.25);
+            border-radius: 8px;
+            z-index: 1002;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .slide-picker.open { display: flex; }
+        .picker-header {
+            padding: clamp(0.6rem, 1.2vh, 0.9rem) clamp(0.8rem, 1.5vw, 1.2rem);
+            border-bottom: 1px solid rgba(245,246,250,0.08);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .picker-title {
+            font-size: var(--xs); font-weight: 600;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--blue);
+        }
+        .picker-close {
+            background: none; border: none;
+            color: var(--light-dim);
+            cursor: pointer; font-size: 1rem;
+            line-height: 1; padding: 4px 8px;
+            border-radius: 3px;
+        }
+        .picker-close:hover { color: var(--light); background: rgba(255,255,255,0.06); }
+        .picker-list {
+            overflow-y: auto;
+            padding: clamp(0.3rem, 0.5vh, 0.5rem) 0;
+        }
+        .picker-list::-webkit-scrollbar { width: 6px; }
+        .picker-list::-webkit-scrollbar-track { background: transparent; }
+        .picker-list::-webkit-scrollbar-thumb { background: rgba(72,151,247,0.3); border-radius: 3px; }
+        .picker-item {
+            padding: clamp(0.4rem, 0.8vh, 0.6rem) clamp(0.8rem, 1.5vw, 1.2rem);
+            display: grid;
+            grid-template-columns: 24px 1fr;
+            gap: clamp(0.5rem, 1vw, 0.8rem);
+            cursor: pointer;
+            align-items: center;
+            border-left: 2px solid transparent;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .picker-item:hover {
+            background: rgba(72,151,247,0.08);
+            border-left-color: rgba(72,151,247,0.5);
+        }
+        .picker-item.active {
+            background: rgba(72,151,247,0.12);
+            border-left-color: var(--blue);
+        }
+        .picker-num {
+            font-family: var(--fse); font-style: italic;
+            font-size: clamp(0.75rem, 1vw, 0.9rem);
+            color: var(--blue);
+            text-align: center;
+            line-height: 1;
+        }
+        .picker-text {
+            display: flex; flex-direction: column;
+            gap: 1px;
+            min-width: 0;
+        }
+        .picker-kicker {
+            font-size: clamp(0.5rem, 0.66vw, 0.6rem);
+            font-weight: 500; letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(72,151,247,0.7);
+        }
+        .picker-name {
+            font-size: clamp(0.7rem, 0.92vw, 0.82rem);
+            font-weight: 500;
+            color: var(--light);
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .picker-item.active .picker-name { color: var(--blue); }
+        .picker-divider {
+            padding: clamp(0.3rem, 0.6vh, 0.5rem) clamp(0.8rem, 1.5vw, 1.2rem) clamp(0.15rem, 0.3vh, 0.25rem);
+            font-size: clamp(0.5rem, 0.66vw, 0.6rem);
+            font-weight: 600; letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(245,246,250,0.35);
+            border-top: 1px solid rgba(245,246,250,0.06);
+            margin-top: 4px;
+        }
+        .picker-divider:first-child { border-top: none; margin-top: 0; }
+
+        /* ===================================================
            ANIMATIONS
            =================================================== */
         .r { opacity: 0; transform: translateY(18px);
@@ -975,12 +1386,6 @@
             backdrop-filter: blur(12px); transition: background 0.2s;
         }
         .nav-btn:hover { background: rgba(72,151,247,0.2); }
-        .nav-count {
-            padding: clamp(0.3rem, 0.5vh, 0.45rem) clamp(0.5rem, 0.8vw, 0.65rem);
-            background: rgba(15,17,28,0.9); color: var(--light);
-            border-radius: 4px; backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
 
         /* Responsive */
         @media (max-height: 700px) {
@@ -1025,110 +1430,88 @@
 <section class="slide t-dark title-slide">
     <div class="title-dot"></div>
     <div class="slide-body">
-        <div class="title-brand r">INSCEND AI</div>
+        <div class="title-brand r">INSCEND AI<span style="font-size: 0.55em; vertical-align: super; margin-left: 2px; opacity: 0.7;">™</span></div>
         <h1 class="title-h1 r">AI in <i>Compliance</i></h1>
-        <p class="title-sub r">From cost center to strategic advantage. A perspective on where AI fits across the compliance value chain, and how to get your organization ready.</p>
+        <p class="title-sub r">A structured view of where AI creates measurable value across the compliance value chain, and what it takes to implement successfully.</p>
         <div class="title-meta r">
             <span>Malik Alatshan</span>
             <span>Founder & CEO, Inscend AI</span>
             <span>2026</span>
         </div>
     </div>
+    <div class="footer-mark">© 2026 Inscend AI. All rights reserved. Confidential and proprietary.</div>
 </section>
 
-<!-- ===================== SLIDE 2: ABOUT ME ===================== -->
+<!-- ===================== SLIDE 2: INSCEND AI ===================== -->
 <section class="slide">
-    <div class="about-grid">
+    <div class="mission-grid">
 
-        <!-- LEFT: Dark panel -->
-        <div class="about-left">
-            <div class="about-top-label">About the Speaker</div>
-            <div class="about-name">Malik<br>Alatshan</div>
-            <div class="about-role">Founder & Chief Executive Officer</div>
-            <div class="about-org">Inscend AI · Toronto, Canada</div>
-            <div class="about-stats">
-                <div class="stat"><div class="stat-num">20</div><div class="stat-label">Years in<br>Strategy & Ops</div></div>
-                <div class="stat"><div class="stat-num">6</div><div class="stat-label">Service<br>Lines</div></div>
-                <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Countries<br>Served</div></div>
+        <!-- LEFT: Dark panel — company identity, positioning, credentials -->
+        <div class="mission-left">
+            <div class="mission-brand">INSCEND AI<span style="font-size: 0.55em; vertical-align: super; margin-left: 2px; opacity: 0.7;">™</span></div>
+            <h2 class="mission-headline r">An AI automation partner for regulated industries.</h2>
+            <p class="mission-tagline r" style="font-style: normal; font-family: var(--fs); font-weight: 500; color: var(--blue);">Automate. Integrate. Grow.</p>
+            <div class="mission-line r"></div>
+            <p class="mission-body r">Inscend AI designs, builds, and operates AI solutions for compliance, risk, finance, and operations teams. Our work combines management consulting discipline with applied AI engineering to deliver measurable business outcomes, not technology for its own sake.</p>
+
+            <div class="mission-credentials r">
+                <div class="cred-item">
+                    <div class="cred-n">2</div>
+                    <div class="cred-l">Offices<br>Toronto · Dubai</div>
+                </div>
+                <div class="cred-item">
+                    <div class="cred-n">10+</div>
+                    <div class="cred-l">Countries<br>Served</div>
+                </div>
+                <div class="cred-item">
+                    <div class="cred-n">6</div>
+                    <div class="cred-l">Service<br>Lines</div>
+                </div>
+                <div class="cred-item">
+                    <div class="cred-n">20+</div>
+                    <div class="cred-l">Years of Leadership<br>Experience</div>
+                </div>
             </div>
+            <div class="footer-mark">© 2026 Inscend AI™. All rights reserved. Confidential and proprietary. Not for reproduction or distribution without written consent.</div>
         </div>
 
-        <!-- RIGHT: Cream panel with timeline -->
-        <div class="about-right">
-            <div class="about-right-label">Career Journey</div>
-            <div class="timeline">
-                <div class="tl-item">
-                    <div class="tl-dot"></div>
-                    <div>
-                        <div class="tl-label">Present</div>
-                        <div class="tl-title">Founder & Chief Executive Officer</div>
-                        <div class="tl-sub">Inscend AI · 2025 to Present · Toronto, Canada</div>
-                        <div class="tl-desc">AI automation agency serving wealth management, compliance, legal, and professional services firms across North America and the Middle East. Six service lines spanning AI strategy, custom agents, workflow automation, consulting, training, and ongoing support.</div>
-                    </div>
+        <!-- RIGHT: Cream panel — compliance positioning + service lines -->
+        <div class="mission-right">
+            <div class="mission-right-label r">Where We Focus</div>
+            <h3 class="mission-right-title r">Compliance leaders face four converging pressures. We address all four.</h3>
+
+            <div class="mission-pressure-list r">
+                <div class="pressure-card">
+                    <div class="pressure-card-t">Operational Efficiency</div>
+                    <div class="pressure-card-d">Automate repetitive review, monitoring, and reporting so skilled analysts focus on judgment calls, exceptions, and escalations.</div>
                 </div>
-                <div class="tl-item">
-                    <div class="tl-dot"></div>
-                    <div>
-                        <div class="tl-label">Capital Markets</div>
-                        <div class="tl-title">VP, Productivity & Efficiency and Business Management</div>
-                        <div class="tl-sub">RBC Capital Markets · 2022 to 2024</div>
-                        <div class="tl-desc">Managed $600M in annual vendor spend and captured $20M in savings. Launched the $120M Significant Risk Transfer program. Transitioned the 1,600 person COO Group to OKRs.</div>
-                    </div>
+                <div class="pressure-card">
+                    <div class="pressure-card-t">Data Complexity</div>
+                    <div class="pressure-card-d">Consolidate fragmented transaction, policy, and regulatory data into governed structures that AI can operate on reliably.</div>
                 </div>
-                <div class="tl-item">
-                    <div class="tl-dot"></div>
-                    <div>
-                        <div class="tl-label">Enterprise Strategy</div>
-                        <div class="tl-title">Senior Manager, Strategy & Transformation</div>
-                        <div class="tl-sub">Royal Bank of Canada · 2018 to 2021</div>
-                        <div class="tl-desc">Data strategy for Personal & Commercial Banking, Payments, and Home Equity Finance. Introduced zero based budgeting with McKinsey to the Savings & Investment segment.</div>
-                    </div>
+                <div class="pressure-card">
+                    <div class="pressure-card-t">Fiscal Discipline</div>
+                    <div class="pressure-card-d">Expand compliance capacity without proportional headcount growth. Allocate spend where it reduces measurable risk.</div>
                 </div>
-                <div class="tl-item">
-                    <div class="tl-dot"></div>
-                    <div>
-                        <div class="tl-label">Consulting</div>
-                        <div class="tl-title">Senior Consultant</div>
-                        <div class="tl-sub">Ernst & Young · 2016 to 2018 · Houston & Toronto</div>
-                        <div class="tl-desc">Value chain analysis and pricing strategy for global technology companies and a publicly listed corporation in Saudi Arabia.</div>
-                    </div>
-                </div>
-                <div class="tl-item">
-                    <div class="tl-dot"></div>
-                    <div>
-                        <div class="tl-label">Education</div>
-                        <div class="tl-title">M.S. Finance · MBA (Fulbright Scholar)</div>
-                        <div class="tl-sub">Texas A&M University · Case Western Reserve University</div>
-                    </div>
+                <div class="pressure-card">
+                    <div class="pressure-card-t">Regulatory Expectations</div>
+                    <div class="pressure-card-d">Transition from periodic, sample-based controls to continuous monitoring and proactive risk intelligence.</div>
                 </div>
             </div>
 
-            <div class="about-advisory-block">
-                <div class="about-advisory-label">Select Advisory Engagements</div>
-                <div class="adv-list">
-                    <div class="adv-item">
-                        <div class="adv-year">2026</div>
-                        <div class="adv-detail"><strong>Human capital strategy</strong> · Ministry of Industry and Mineral Resources, Saudi Arabia</div>
-                    </div>
-                    <div class="adv-item">
-                        <div class="adv-year">2025</div>
-                        <div class="adv-detail"><strong>Tourism strategy</strong> · Ministry of Interior, Saudi Arabia</div>
-                    </div>
-                    <div class="adv-item">
-                        <div class="adv-year">2024</div>
-                        <div class="adv-detail"><strong>Reconstruction fund financial architecture</strong> · Palestine</div>
-                    </div>
-                    <div class="adv-item">
-                        <div class="adv-year">2020</div>
-                        <div class="adv-detail"><strong>Skills for trade and economic diversification</strong> · International Labour Organization, Jordan</div>
-                    </div>
+            <div class="r" style="margin-top: clamp(0.4rem, 0.9vh, 0.8rem);">
+                <div class="mission-right-label" style="margin-bottom: clamp(0.3rem, 0.6vh, 0.5rem);">Service Lines</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(0.4rem, 0.8vw, 0.7rem); font-size: var(--xs); color: var(--ink-dim); line-height: 1.4;">
+                    <div><strong style="color: var(--ink); font-weight: 600;">AI Strategy</strong><br>Roadmap and prioritization</div>
+                    <div><strong style="color: var(--ink); font-weight: 600;">Custom Agents</strong><br>Purpose-built automation</div>
+                    <div><strong style="color: var(--ink); font-weight: 600;">Workflow Integration</strong><br>Embedding into systems</div>
+                    <div><strong style="color: var(--ink); font-weight: 600;">Advisory</strong><br>Strategy and governance</div>
+                    <div><strong style="color: var(--ink); font-weight: 600;">Training & Enablement</strong><br>Upskilling and change</div>
+                    <div><strong style="color: var(--ink); font-weight: 600;">Managed Support</strong><br>Monitoring and optimization</div>
                 </div>
             </div>
 
-            <div class="about-links-row">
-                <a href="https://inscendai.com" target="_blank">inscendai.com</a>
-                <a href="https://linkedin.com/in/alatshanmalik" target="_blank">LinkedIn</a>
-            </div>
+            <div class="footer-mark" style="color: var(--ink-fade);">© 2026 Inscend AI™. All rights reserved. Confidential and proprietary. Not for reproduction or distribution without written consent.</div>
         </div>
     </div>
 </section>
@@ -1137,46 +1520,46 @@
 <section class="slide t-dark">
     <div class="bar"></div>
     <div class="slide-body">
-        <div class="label r">Agenda</div>
-        <h2 class="heading r">What We'll <i>Cover</i></h2>
+        <div class="label r">State of Play</div>
+        <h2 class="heading r">Where you are. Where you need to be. <i>How to get there.</i></h2>
         <div class="agenda">
             <div class="ag-item r">
                 <div class="ag-num">01</div>
                 <div class="ag-center">
-                    <div class="ag-title">The <i>Shift</i></div>
-                    <div class="ag-desc">Why compliance has reached an inflection point, and why AI readiness is no longer optional.</div>
+                    <div class="ag-title">Market Context</div>
+                    <div class="ag-desc">The regulatory, operational, and financial pressures driving AI adoption in compliance functions.</div>
                 </div>
                 <div class="ag-marker"></div>
             </div>
             <div class="ag-item r">
                 <div class="ag-num">02</div>
                 <div class="ag-center">
-                    <div class="ag-title">The Two Faces of <i>AI</i></div>
-                    <div class="ag-desc">Generative AI assists. Agentic AI acts. Understanding both is essential for modern compliance leadership.</div>
+                    <div class="ag-title">Generative and Agentic AI</div>
+                    <div class="ag-desc">The distinction between AI that assists human work and AI that executes autonomously, and why it matters for compliance.</div>
                 </div>
                 <div class="ag-marker"></div>
             </div>
             <div class="ag-item r">
                 <div class="ag-num">03</div>
                 <div class="ag-center">
-                    <div class="ag-title">AI Across the <i>Compliance Value Chain</i></div>
-                    <div class="ag-desc">A layered view of the compliance function, with concrete AI opportunities at every stage and their impact on revenue, cost, quality, and flexibility.</div>
+                    <div class="ag-title">AI Across the Compliance Value Chain</div>
+                    <div class="ag-desc">Specific AI use cases at each stage of the compliance function, with impact across revenue, cost, quality, and flexibility.</div>
                 </div>
                 <div class="ag-marker"></div>
             </div>
             <div class="ag-item r">
                 <div class="ag-num">04</div>
                 <div class="ag-center">
-                    <div class="ag-title">The Readiness <i>Playbook</i></div>
-                    <div class="ag-desc">People, data, framework, and metrics. The four pillars of getting your organization AI ready.</div>
+                    <div class="ag-title">Readiness Framework</div>
+                    <div class="ag-desc">A structured approach to assess, segment, upskill, embed, and measure AI readiness across the organization.</div>
                 </div>
                 <div class="ag-marker"></div>
             </div>
             <div class="ag-item r">
                 <div class="ag-num">05</div>
                 <div class="ag-center">
-                    <div class="ag-title">From <i>Adoption</i> to <i>Transformation</i></div>
-                    <div class="ag-desc">The common pitfalls, and what separates organizations that transform from those that merely adopt.</div>
+                    <div class="ag-title">Implementation Risks</div>
+                    <div class="ag-desc">Common pitfalls and the practical difference between adopting AI tools and achieving operational transformation.</div>
                 </div>
                 <div class="ag-marker"></div>
             </div>
@@ -1188,7 +1571,7 @@
 <section class="slide t-dark divider">
     <div class="divider-inner r">
         <div class="label">Section 01</div>
-        <h2 class="divider-title">The <i>Shift</i></h2>
+        <h2 class="divider-title">Market <i>Context</i></h2>
         <div class="divider-line"></div>
     </div>
 </section>
@@ -1209,34 +1592,34 @@
 
     <div class="slide-body">
         <div class="label r">Section 01</div>
-        <h2 class="heading r">The Compliance Landscape Is <i>Shifting</i></h2>
-        <div class="insight r"><strong>Three pressures are compounding at once:</strong> regulatory complexity is rising, headcount is constrained, and boards want more from less. AI is the only lever that scales across all three.</div>
+        <h2 class="heading r">Market Context</h2>
+        <div class="insight r"><strong>Three pressures are compounding simultaneously:</strong> <strong>regulatory complexity</strong>, <strong>fiscal constraint</strong>, and <strong>heightened expectations</strong>. AI is one of the few levers that scales across all three.</div>
         <div class="g g3 r">
             <div class="c c-outline">
                 <div class="c-lbl">Regulatory Volume</div>
-                <div class="c-title">Rules Outpacing Review</div>
-                <div class="c-dim">Rule changes are accelerating globally. Manual horizon scanning cannot keep pace, and teams are falling behind before they know what changed.</div>
+                <div class="c-title">Accelerating rule change</div>
+                <div class="c-dim">Regulatory bodies are issuing rule updates, guidance, and enforcement actions at increasing frequency. Manual horizon scanning is no longer sufficient for timely impact assessment.</div>
             </div>
             <div class="c c-blue">
-                <div class="c-lbl">Cost Pressure</div>
-                <div class="c-dim" style="font-family: var(--fse); font-style: italic; font-size: clamp(1rem, 1.9vw, 1.4rem); font-weight: 400; line-height: 1.2; color: white;">Do more with less.</div>
-                <div class="c-dim">Compliance budgets are scrutinized quarterly. Leaders are asked to deliver more monitoring, testing, and reporting without proportional headcount.</div>
+                <div class="c-lbl">Fiscal Constraint</div>
+                <div class="c-title">Capacity pressure</div>
+                <div class="c-dim">Compliance functions are expected to expand monitoring, testing, and reporting coverage without proportional growth in headcount or budget.</div>
             </div>
             <div class="c c-dark">
                 <div class="c-lbl">Expectation Gap</div>
-                <div class="c-title">From Backward to Forward</div>
-                <div class="c-dim">Boards and regulators expect proactive risk intelligence, not backward looking checklists. The bar has moved. Most teams haven't.</div>
+                <div class="c-title">From reactive to proactive</div>
+                <div class="c-dim">Boards and regulators increasingly expect continuous, data-driven risk intelligence rather than periodic, sample-based controls and retrospective reporting.</div>
             </div>
         </div>
     </div>
-    <div class="callout r"><strong>The question isn't whether AI will reach compliance.</strong> <em>It's whether your team will lead the adoption, or react to it.</em></div>
+    <div class="callout r"><strong>The relevant question is not whether to adopt AI, but how and when.</strong> <strong>Early, structured adoption</strong> positions the function to shape how AI is used. <strong>Reactive adoption</strong> typically results in fragmented tools, stranded spend, and limited impact.</div>
 </section>
 
 <!-- ===================== SLIDE 6: SECTION 02 DIVIDER ===================== -->
 <section class="slide t-dark divider">
     <div class="divider-inner r">
         <div class="label">Section 02</div>
-        <h2 class="divider-title">The Two Faces of <i>AI</i></h2>
+        <h2 class="divider-title">Generative and <i>Agentic AI</i></h2>
         <div class="divider-line"></div>
     </div>
 </section>
@@ -1246,35 +1629,67 @@
     <div class="bar"></div>
     <div class="slide-body">
         <div class="label r">Section 02</div>
-        <h2 class="heading r">Generative AI vs. <i>Agentic AI</i></h2>
+        <h2 class="heading r">Generative AI and <i>Agentic AI</i></h2>
         <div class="g g2 r">
             <div class="c c-outline">
+                <div class="card-illus">
+                    <!-- Generative AI: linear, single-step input → output -->
+                    <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="25" r="5" fill="none" stroke="#4897F7" stroke-width="1.5"/>
+                        <line x1="28" y1="25" x2="80" y2="25" stroke="#4897F7" stroke-width="1.2" stroke-dasharray="2,3"/>
+                        <rect x="80" y="13" width="40" height="24" rx="3" fill="none" stroke="#4897F7" stroke-width="1.5"/>
+                        <text x="100" y="30" text-anchor="middle" fill="#4897F7" font-size="13" font-family="'Instrument Serif', serif" font-style="italic">AI</text>
+                        <line x1="120" y1="25" x2="172" y2="25" stroke="#4897F7" stroke-width="1.5"/>
+                        <polygon points="172,21 180,25 172,29" fill="#4897F7"/>
+                    </svg>
+                </div>
                 <div class="c-lbl">Generative AI</div>
-                <div class="c-title">AI Assists</div>
-                <div class="c-dim">Creates content such as text, summaries, and drafts in direct response to a prompt. Reactive. The human drives every step.</div>
+                <div class="c-title">Assists human work</div>
+                <div class="c-dim">Produces content, summaries, analyses, and drafts in response to a specific prompt. Reactive by design. A human directs and validates each step.</div>
                 <div class="tags">
                     <span class="tag tag-o">Reactive</span>
                     <span class="tag tag-o">Human in the loop</span>
                     <span class="tag tag-o">Single turn</span>
                 </div>
-                <div class="c-foot" style="border-top: none;"><strong style="font-style:normal; display:block; margin-bottom:2px;">Skills needed:</strong> Prompt engineering, output evaluation, hallucination awareness</div>
-                <div class="c-dim" style="margin-top:auto; font-style:italic; opacity:0.6;">Examples: ChatGPT, Copilot, Claude</div>
+                <div class="c-foot" style="border-top: none;"><strong style="font-style:normal; display:block; margin-bottom:2px;">Capability requirements:</strong> Prompt design, output validation, awareness of model limitations</div>
+                <div class="c-dim" style="margin-top:auto; opacity:0.75;">Examples: ChatGPT, Microsoft Copilot, Claude</div>
             </div>
             <div class="c c-dark">
+                <div class="card-illus">
+                    <!-- Agentic AI: branching, multi-step autonomous flow -->
+                    <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="14" cy="25" r="5" fill="none" stroke="#4897F7" stroke-width="1.5"/>
+                        <line x1="22" y1="25" x2="48" y2="13" stroke="#4897F7" stroke-width="1.2"/>
+                        <line x1="22" y1="25" x2="48" y2="37" stroke="#4897F7" stroke-width="1.2"/>
+                        <circle cx="55" cy="13" r="5" fill="#4897F7"/>
+                        <circle cx="55" cy="37" r="5" fill="#4897F7"/>
+                        <line x1="62" y1="13" x2="88" y2="25" stroke="#4897F7" stroke-width="1.2"/>
+                        <line x1="62" y1="37" x2="88" y2="25" stroke="#4897F7" stroke-width="1.2"/>
+                        <circle cx="95" cy="25" r="5" fill="none" stroke="#4897F7" stroke-width="1.5"/>
+                        <line x1="102" y1="25" x2="128" y2="13" stroke="#4897F7" stroke-width="1.2"/>
+                        <line x1="102" y1="25" x2="128" y2="37" stroke="#4897F7" stroke-width="1.2"/>
+                        <circle cx="135" cy="13" r="5" fill="#4897F7"/>
+                        <circle cx="135" cy="37" r="5" fill="#4897F7"/>
+                        <line x1="142" y1="13" x2="168" y2="25" stroke="#4897F7" stroke-width="1.2"/>
+                        <line x1="142" y1="37" x2="168" y2="25" stroke="#4897F7" stroke-width="1.2"/>
+                        <line x1="175" y1="25" x2="186" y2="25" stroke="#4897F7" stroke-width="1.5"/>
+                        <polygon points="184,21 192,25 184,29" fill="#4897F7"/>
+                    </svg>
+                </div>
                 <div class="c-lbl">Agentic AI</div>
-                <div class="c-title">AI Acts</div>
-                <div class="c-dim">Takes sequential actions, makes decisions, and pursues goals autonomously with minimal human intervention per step.</div>
+                <div class="c-title">Executes autonomously</div>
+                <div class="c-dim">Takes sequential actions, makes decisions, and completes multi-step objectives with limited human intervention at each step.</div>
                 <div class="tags">
                     <span class="tag tag-b">Proactive</span>
                     <span class="tag tag-b">Autonomous</span>
                     <span class="tag tag-b">Multi step</span>
                 </div>
-                <div class="c-foot" style="border-top: none;"><strong style="font-style:normal; display:block; margin-bottom:2px;">Skills needed:</strong> Oversight design, governance, trust calibration, workflow redesign</div>
-                <div class="c-dim" style="margin-top:auto; font-style:italic; opacity:0.6;">Examples: AI agents that monitor, escalate, and file autonomously</div>
+                <div class="c-foot" style="border-top: none;"><strong style="font-style:normal; display:block; margin-bottom:2px;">Capability requirements:</strong> Oversight design, governance controls, trust calibration, workflow architecture</div>
+                <div class="c-dim" style="margin-top:auto; opacity:0.75;">Examples: Agents that monitor transactions, escalate exceptions, and prepare filings</div>
             </div>
         </div>
     </div>
-    <div class="callout r"><strong>Why this matters for compliance:</strong> <em>Agentic AI is not a future trend. It's arriving now. Your team needs to understand not just how to use AI, but how to supervise it.</em></div>
+    <div class="callout r"><strong>Implication for compliance:</strong> Agentic AI is <strong>already operational</strong> in several industries. The compliance function needs to define <strong>how such systems are governed</strong>, how oversight is maintained, and where human approval remains required, before the technology is deployed, not after.</div>
 </section>
 
 <!-- ===================== SLIDE 8: SECTION 03 DIVIDER ===================== -->
@@ -1291,8 +1706,8 @@
     <div class="bar"></div>
     <div class="slide-body">
         <div class="label r">Section 03</div>
-        <h2 class="heading r">The Compliance Value Chain, <i>Dissected</i></h2>
-        <div class="insight r">Six stages. Three layers. Every cell is an opportunity to move from manual effort to intelligent automation.</div>
+        <h2 class="heading r">The Compliance Value Chain</h2>
+        <div class="insight r">The matrix identifies where current manual effort can be redirected to AI-augmented work, and the measurable impact this creates.</div>
 
         <div class="vc-matrix r">
             <!-- HEADER ROW -->
@@ -1306,35 +1721,35 @@
 
             <!-- TODAY ROW -->
             <div class="vc-row vc-row-today">
-                <div class="vc-rowlabel">Today</div>
-                <div class="vc-cell">Manual horizon scanning of bulletins</div>
-                <div class="vc-cell">Quarterly drafting cycles, version drift</div>
-                <div class="vc-cell">Static risk registers updated annually</div>
-                <div class="vc-cell">Periodic sampling, lagging alerts</div>
+                <div class="vc-rowlabel">Current State</div>
+                <div class="vc-cell">Manual review of regulatory bulletins</div>
+                <div class="vc-cell">Quarterly drafting cycles, version control gaps</div>
+                <div class="vc-cell">Static risk registers, annual updates</div>
+                <div class="vc-cell">Periodic sampling, delayed alerting</div>
                 <div class="vc-cell">Manual filing, spreadsheet tracking</div>
-                <div class="vc-cell">Annual training, one size fits all</div>
+                <div class="vc-cell">Annual training, standardized content</div>
             </div>
 
             <!-- AI OPPORTUNITY ROW -->
             <div class="vc-row vc-row-ai">
-                <div class="vc-rowlabel">AI Opportunity</div>
-                <div class="vc-cell">Regulatory Radar Agent, auto classification</div>
-                <div class="vc-cell">Policy Lifecycle Agent, version intelligence</div>
-                <div class="vc-cell">Dynamic risk scoring, predictive modeling</div>
-                <div class="vc-cell">Real time anomaly detection, auto routing</div>
-                <div class="vc-cell">Auto generated filings, remediation tracking</div>
-                <div class="vc-cell">Adaptive Coach Agent, role specific learning</div>
+                <div class="vc-rowlabel">AI Application</div>
+                <div class="vc-cell">Automated regulatory scanning and classification</div>
+                <div class="vc-cell">AI-assisted policy drafting and version management</div>
+                <div class="vc-cell">Dynamic risk scoring and predictive analytics</div>
+                <div class="vc-cell">Continuous anomaly detection and triage</div>
+                <div class="vc-cell">Automated filing preparation and remediation tracking</div>
+                <div class="vc-cell">Role-specific adaptive learning systems</div>
             </div>
 
             <!-- OUTCOME ROW -->
             <div class="vc-row vc-row-out">
                 <div class="vc-rowlabel">Impact</div>
-                <div class="vc-cell">Hours, not weeks</div>
-                <div class="vc-cell">No more shelfware policies</div>
-                <div class="vc-cell">Living risk intelligence</div>
-                <div class="vc-cell">Catches what sampling misses</div>
-                <div class="vc-cell">40 to 60% cycle time cut</div>
-                <div class="vc-cell">Continuous, not annual</div>
+                <div class="vc-cell">Response time reduced from weeks to hours</div>
+                <div class="vc-cell">Policies remain current and aligned to procedure</div>
+                <div class="vc-cell">Risk view updated continuously, not periodically</div>
+                <div class="vc-cell">Detection coverage beyond sampling limits</div>
+                <div class="vc-cell">Reporting cycles reduced by 40 to 60%</div>
+                <div class="vc-cell">Continuous capability development</div>
             </div>
         </div>
     </div>
@@ -1345,26 +1760,26 @@
     <div class="bar"></div>
     <div class="slide-body">
         <div class="label r">Section 03</div>
-        <h2 class="heading r">Today, <i>Tomorrow</i>, and the Opportunity</h2>
-        <div class="insight r">The shift isn't theoretical. It's a progression from where compliance is stuck today, through what AI unlocks, to the strategic outcome on the other side.</div>
+        <h2 class="heading r">The Transition in <i>Practice</i></h2>
+        <div class="insight r">The shift from current state to mature AI-enabled compliance follows a <strong>consistent pattern</strong> across organizations. Each stage represents a <strong>distinct operational posture</strong>, not an incremental upgrade.</div>
 
         <div class="progression r">
             <div class="prg-block prg-1">
-                <div class="prg-lbl">Today</div>
-                <div class="prg-title">Reactive & Manual</div>
-                <div class="prg-body">Analysts spend 60 to 80% of their time gathering data, not applying judgment. Risk is a backward looking exercise. Reporting catches up with reality; it does not anticipate it.</div>
+                <div class="prg-lbl">Current State</div>
+                <div class="prg-title">Reactive and manual</div>
+                <div class="prg-body">Analysts allocate 60 to 80% of time to data gathering and preparation. Risk assessments are retrospective. Reporting follows events rather than anticipating them. Headcount scales with volume.</div>
             </div>
             <div class="prg-arrow">→</div>
             <div class="prg-block prg-2">
-                <div class="prg-lbl">AI Intervention</div>
-                <div class="prg-title">Continuous & Intelligent</div>
-                <div class="prg-body">Agents monitor, draft, score, and escalate around the clock. Data flows through AI layers that surface patterns humans miss. Humans move up the value chain.</div>
+                <div class="prg-lbl">AI-Enabled</div>
+                <div class="prg-title">Continuous and augmented</div>
+                <div class="prg-body">AI systems handle monitoring, drafting, scoring, and escalation continuously. Analysts focus on exceptions, interpretation, and higher-order judgment. Detection coverage extends beyond manual sampling.</div>
             </div>
             <div class="prg-arrow">→</div>
             <div class="prg-block prg-3">
-                <div class="prg-lbl">Opportunity</div>
-                <div class="prg-title">Proactive Risk Intelligence</div>
-                <div class="prg-body">Compliance shifts from a cost center to a strategic function. Fewer people doing more meaningful work. Faster cycles, fewer surprises, stronger regulatory standing.</div>
+                <div class="prg-lbl">Target State</div>
+                <div class="prg-title">Proactive and strategic</div>
+                <div class="prg-body">Compliance operates as a source of risk intelligence rather than a processing function. Shorter decision cycles, improved regulatory standing, and measurable cost-to-capacity ratios.</div>
             </div>
         </div>
     </div>
@@ -1409,11 +1824,11 @@
 
             <!-- RIGHT: Takeaway -->
             <div class="takeaway">
-                <div class="takeaway-lbl">The Takeaway</div>
-                <div class="takeaway-body">"Every dollar invested upstream saves five to ten times that in downstream remediation."</div>
+                <div class="takeaway-lbl">Why Upstream First</div>
+                <div class="takeaway-body">Issues identified at the regulatory, policy, or risk assessment stage are significantly less costly to address than those that surface in monitoring, reporting, or enforcement.</div>
                 <div class="takeaway-stat">
                     <div class="takeaway-stat-big">5–10×</div>
-                    <div class="takeaway-stat-lbl">ROI on upstream intelligence vs downstream fixes</div>
+                    <div class="takeaway-stat-lbl">Typical cost differential between upstream prevention and downstream remediation</div>
                 </div>
             </div>
         </div>
@@ -1459,11 +1874,11 @@
 
             <!-- RIGHT: Takeaway -->
             <div class="takeaway">
-                <div class="takeaway-lbl">The Takeaway</div>
-                <div class="takeaway-body">"When AI spans the full chain, returns compound. Faster detection, cleaner reporting, and culture that sticks."</div>
+                <div class="takeaway-lbl">Cumulative Impact</div>
+                <div class="takeaway-body">AI applied across multiple stages of the compliance chain produces compounding returns. The measurable outcomes, faster detection, shorter reporting cycles, and sustained behavior change, reinforce each other.</div>
                 <div class="takeaway-stat">
                     <div class="takeaway-stat-big">40–60%</div>
-                    <div class="takeaway-stat-lbl">reduction in reporting cycle time, measured across early deployments</div>
+                    <div class="takeaway-stat-lbl">Observed reduction in reporting cycle time in early AI deployments</div>
                 </div>
             </div>
         </div>
@@ -1475,40 +1890,40 @@
     <div class="bar"></div>
     <div class="slide-body">
         <div class="label r">Section 03</div>
-        <h2 class="heading r">Impact Across <i>Four Dimensions</i></h2>
-        <div class="insight r">AI in compliance isn't just cost reduction. The compelling case spans <strong>revenue protection, cost optimization, quality uplift, and organizational flexibility.</strong></div>
+        <h2 class="heading r">Impact Across Four <i>Dimensions</i></h2>
+        <div class="insight r">The business case for AI in compliance extends beyond cost reduction. A well-structured program generates measurable impact across <strong>revenue protection, cost optimization, quality improvement, and organizational flexibility.</strong></div>
 
         <div class="impact-grid r">
             <div class="imp-card imp-1">
                 <div class="imp-lbl">Revenue</div>
-                <div class="imp-verb">Protect.</div>
-                <div class="imp-body">Faster regulatory clearance accelerates product launches. Proactive risk intelligence protects revenue streams before incidents occur. Compliance becomes a market differentiator.</div>
+                <div class="imp-verb">Protect</div>
+                <div class="imp-body">Faster regulatory clearance supports product launch timelines. Proactive risk identification reduces the probability of revenue-impacting incidents and regulatory action.</div>
             </div>
             <div class="imp-card imp-2">
                 <div class="imp-lbl">Cost</div>
-                <div class="imp-verb">Optimize.</div>
-                <div class="imp-body">Automate 40 to 60% of manual compliance tasks. Reduce reliance on external counsel for routine regulatory questions. Cut reporting cycle time and reallocate capacity.</div>
+                <div class="imp-verb">Optimize</div>
+                <div class="imp-body">Automation of 40 to 60% of manual tasks, reduced reliance on external counsel for routine matters, and shorter reporting cycles enable capacity reallocation to higher-value work.</div>
             </div>
             <div class="imp-card imp-3">
                 <div class="imp-lbl">Quality</div>
-                <div class="imp-verb">Elevate.</div>
-                <div class="imp-body">Eliminate false negatives in surveillance. Ensure consistent policy application across jurisdictions. AI driven testing catches what periodic sampling misses.</div>
+                <div class="imp-verb">Improve</div>
+                <div class="imp-body">Reduced false negatives in surveillance. Consistent policy application across jurisdictions and business lines. Expanded detection coverage beyond periodic sampling.</div>
             </div>
             <div class="imp-card imp-4">
                 <div class="imp-lbl">Flexibility</div>
-                <div class="imp-verb">Scale.</div>
-                <div class="imp-body">Scale compliance capacity without proportional headcount growth. Adapt to new regulations faster. Deploy monitoring for new products, markets, or jurisdictions in weeks.</div>
+                <div class="imp-verb">Scale</div>
+                <div class="imp-body">Compliance capacity scales without proportional headcount growth. New regulations, products, markets, and jurisdictions can be onboarded in weeks rather than quarters.</div>
             </div>
         </div>
     </div>
-    <div class="callout r"><strong>The strongest business case combines all four.</strong> <em>Cost savings get attention. Revenue protection and quality uplift earn executive sponsorship.</em></div>
+    <div class="callout r"><strong>The most durable business case considers all four dimensions.</strong> <strong>Cost reduction</strong> secures initial approval. <strong>Revenue protection</strong> and <strong>quality improvement</strong> sustain executive sponsorship over time.</div>
 </section>
 
 <!-- ===================== SLIDE 14: SECTION 04 DIVIDER ===================== -->
 <section class="slide t-dark divider">
     <div class="divider-inner r">
         <div class="label">Section 04</div>
-        <h2 class="divider-title">The Readiness <i>Playbook</i></h2>
+        <h2 class="divider-title">Readiness <i>Framework</i></h2>
         <div class="divider-line"></div>
     </div>
 </section>
@@ -1519,17 +1934,17 @@
     <div class="slide-body">
         <div class="label r">Section 04</div>
         <h2 class="heading r">What <i>"AI Ready"</i> Really Means</h2>
-        <div class="insight r"><strong>Reframe:</strong> AI readiness is not about tools. It starts with people, built layer by layer from foundational awareness to enterprise capability.</div>
+        <div class="insight r">AI readiness is <strong>not primarily a technology question</strong>. It is a <strong>capability question</strong>. Three distinct layers of readiness need to be developed across the organization, each with different learning requirements and time horizons.</div>
 
         <div class="layers r">
-            <div class="layer layer-3">
+            <div class="layer layer-1">
                 <div class="layer-badge">
-                    <div class="layer-badge-n">Layer 03</div>
-                    <div class="layer-badge-t">Capability</div>
+                    <div class="layer-badge-n">Layer 01</div>
+                    <div class="layer-badge-t">Awareness</div>
                 </div>
                 <div class="layer-body">
-                    <div class="layer-body-t"><strong>Building, deploying, or governing AI solutions</strong> at the team, department, or enterprise level. This is where compliance functions take ownership and lead.</div>
-                    <div class="layer-body-ex">Deploying an AI agent for surveillance. Designing governance for autonomous workflows.</div>
+                    <div class="layer-body-t"><strong>Understanding what AI can and cannot do.</strong> Knowing its limits, risks, and possibilities so teams make informed decisions about where it belongs.</div>
+                    <div class="layer-body-ex">Completing AI literacy training. Recognizing when outputs require verification.</div>
                 </div>
             </div>
             <div class="layer layer-2">
@@ -1538,23 +1953,23 @@
                     <div class="layer-badge-t">Fluency</div>
                 </div>
                 <div class="layer-body">
-                    <div class="layer-body-t"><strong>Using AI tools effectively in daily work.</strong> Prompting well, evaluating outputs, integrating into workflows. Moving from curiosity to daily competence.</div>
-                    <div class="layer-body-ex">Writing effective prompts for policy drafts. Using Copilot to summarize regulatory updates.</div>
+                    <div class="layer-body-t"><strong>Using AI tools effectively in daily work.</strong> Prompting, evaluating outputs, and integrating AI into existing workflows.</div>
+                    <div class="layer-body-ex">Drafting policy updates with AI. Summarizing regulatory bulletins at scale.</div>
                 </div>
             </div>
-            <div class="layer layer-1">
+            <div class="layer layer-3">
                 <div class="layer-badge">
-                    <div class="layer-badge-n">Layer 01</div>
-                    <div class="layer-badge-t">Awareness</div>
+                    <div class="layer-badge-n">Layer 03</div>
+                    <div class="layer-badge-t">Capability</div>
                 </div>
                 <div class="layer-body">
-                    <div class="layer-body-t"><strong>Understanding what AI can and cannot do.</strong> Knowing its limits, risks, and possibilities so your teams make informed decisions about where it belongs.</div>
-                    <div class="layer-body-ex">Completing an AI literacy course. Knowing when AI outputs need verification.</div>
+                    <div class="layer-body-t"><strong>Building, deploying, and governing AI solutions</strong> at team, department, or enterprise level. Where compliance functions take ownership.</div>
+                    <div class="layer-body-ex">Deploying surveillance agents. Designing governance for autonomous workflows.</div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="callout r"><strong>The goal isn't to make everyone an AI engineer.</strong> <em>It's to move every person at least one layer up, and ensure no one stays unaware.</em></div>
+    <div class="callout r"><strong>Target outcome:</strong> every role moves <strong>at least one layer up</strong> from its current state, and the organization eliminates pockets where AI remains <strong>outside of everyday awareness</strong>.</div>
 </section>
 
 <!-- ===================== SLIDE 16: DATA READINESS ===================== -->
@@ -1562,32 +1977,32 @@
     <div class="bar"></div>
     <div class="slide-body">
         <div class="label r">Section 04</div>
-        <h2 class="heading r">Getting Your Data Ready for <i>AI</i></h2>
-        <div class="insight r"><strong>Garbage in, garbage out,</strong> at scale. Once your people are ready, your data is the next foundation. Skip this, and you pay for it twice.</div>
+        <h2 class="heading r">Data <i>Readiness</i></h2>
+        <div class="insight r">AI systems <strong>amplify the quality of the data</strong> they are trained on and operate against. Investment in people without a corresponding investment in data <strong>produces limited results</strong>. Four dimensions determine whether data is ready for AI applications.</div>
         <div class="data-grid r">
             <div class="c c-outline">
                 <div class="c-num">01</div>
-                <div class="c-title">Accessibility</div>
-                <div class="c-q">Can your systems talk to each other?</div>
-                <div class="c-dim">Data locked in silos cannot power AI that needs the full picture. Breaking silos is step one.</div>
+                <div class="c-title">Connectivity</div>
+                <div class="c-q">Are systems integrated?</div>
+                <div class="c-dim">AI that requires cross-system context cannot operate on siloed data. Integration across platforms is the first enabler.</div>
             </div>
             <div class="c c-outline">
                 <div class="c-num">02</div>
-                <div class="c-title">Quality</div>
-                <div class="c-q">Is your data accurate, consistent, complete?</div>
-                <div class="c-dim">AI amplifies whatever is in the data, good or bad. Clean data is a competitive advantage.</div>
+                <div class="c-title">Integrity</div>
+                <div class="c-q">Is the data accurate and complete?</div>
+                <div class="c-dim">Incomplete or inconsistent data produces unreliable outputs. Data integrity directly determines the reliability of AI outputs.</div>
             </div>
             <div class="c c-outline">
                 <div class="c-num">03</div>
-                <div class="c-title">Governance</div>
-                <div class="c-q">Who owns the data, and who can use it?</div>
-                <div class="c-dim">Governance is not bureaucracy. It's protection, accountability, and trust at scale.</div>
+                <div class="c-title">Stewardship</div>
+                <div class="c-q">Is ownership and access defined?</div>
+                <div class="c-dim">Clear ownership, access controls, and lineage are prerequisites for regulated use, particularly in compliance contexts.</div>
             </div>
             <div class="c c-outline">
                 <div class="c-num">04</div>
-                <div class="c-title">Structure</div>
-                <div class="c-q">Is your data organized for AI consumption?</div>
-                <div class="c-dim">Unstructured data isn't unusable. But it requires deliberate architecture and a clear plan.</div>
+                <div class="c-title">Architecture</div>
+                <div class="c-q">Is the data model AI-ready?</div>
+                <div class="c-dim">Unstructured sources can be used, but require deliberate architecture decisions before AI applications operate on them reliably.</div>
             </div>
         </div>
     </div>
@@ -1598,32 +2013,32 @@
     <div class="bar"></div>
     <div class="slide-body">
         <div class="label r">Section 04</div>
-        <h2 class="heading r">The Five Step <i>Framework</i></h2>
+        <h2 class="heading r">A Five-Stage <i>Approach</i></h2>
         <div class="fw-vertical r">
             <div class="fw-step">
                 <div class="fw-num">01</div>
-                <div class="fw-title">Assess</div>
-                <div class="fw-desc">Know where your compliance function is today. Audit skills, tools, and data maturity across the organization.</div>
+                <div class="fw-title">Diagnose</div>
+                <div class="fw-desc">Establish a baseline of current capability. Audit existing skills, tool usage, data maturity, and adoption levels across roles and functions.</div>
             </div>
             <div class="fw-step">
                 <div class="fw-num">02</div>
-                <div class="fw-title">Segment</div>
-                <div class="fw-desc">Different roles need different paths. CCOs, analysts, and frontline staff each have unique readiness gaps.</div>
+                <div class="fw-title">Tailor</div>
+                <div class="fw-desc">Define capability requirements by role. Executives, managers, and operational staff have distinct learning needs and time horizons.</div>
             </div>
             <div class="fw-step">
                 <div class="fw-num">03</div>
-                <div class="fw-title">Upskill</div>
-                <div class="fw-desc">Deploy targeted, role specific learning pathways. Continuously updated, not a one time workshop.</div>
+                <div class="fw-title">Develop</div>
+                <div class="fw-desc">Deliver role-specific learning pathways. Update content continuously as AI capabilities, internal tools, and regulatory requirements evolve.</div>
             </div>
             <div class="fw-step">
                 <div class="fw-num">04</div>
                 <div class="fw-title">Embed</div>
-                <div class="fw-desc">Make AI habits stick through culture and workflow integration. Learning stays in the room, not just the training.</div>
+                <div class="fw-desc">Integrate AI into operational workflows and management routines. Behavioral change requires process integration, not training alone.</div>
             </div>
             <div class="fw-step">
                 <div class="fw-num">05</div>
-                <div class="fw-title">Measure</div>
-                <div class="fw-desc">Track leading and lagging indicators. Define success before you start, not after you finish.</div>
+                <div class="fw-title">Validate</div>
+                <div class="fw-desc">Define success criteria at the outset. Track leading and lagging indicators to inform ongoing investment and program adjustments.</div>
             </div>
         </div>
     </div>
@@ -1634,31 +2049,31 @@
     <div class="bar"></div>
     <div class="slide-body">
         <div class="label r">Section 04</div>
-        <h2 class="heading r">What <i>"Measure"</i> Actually Looks Like</h2>
-        <div class="insight r"><strong>Leading indicators predict the future, lagging indicators confirm the past.</strong> The strongest compliance programs weight both, but act on the leading ones first.</div>
+        <h2 class="heading r">Measuring What <i>Matters</i></h2>
+        <div class="insight r">A complete measurement model combines two indicator types. <strong>Leading indicators</strong> predict future state and enable intervention. <strong>Lagging indicators</strong> validate the program's impact over time. Both are required, but <strong>leading indicators should receive greater attention</strong> during the first 12 to 18 months.</div>
 
         <div class="mtable r">
             <!-- LEADING — emphasized -->
             <div class="mcol mcol-leading">
                 <div class="mcol-head">
                     <div class="mcol-head-t">Leading Indicators</div>
-                    <div class="mcol-head-sub">Predict readiness. Act on these now.</div>
+                    <div class="mcol-head-sub">Predict future readiness. Drive near-term action.</div>
                 </div>
                 <div class="mcol-item">
                     <div class="mcol-item-t">% of compliance staff completing AI training by role</div>
-                    <div class="mcol-item-d">Shows whether segmented upskilling is reaching the right people.</div>
+                    <div class="mcol-item-d">Indicates whether role-specific upskilling is reaching the intended audience.</div>
                 </div>
                 <div class="mcol-item">
-                    <div class="mcol-item-t">AI tools actively used per team per week</div>
-                    <div class="mcol-item-d">Distinguishes purchased licenses from embedded workflows.</div>
+                    <div class="mcol-item-t">Active AI tool usage per team per week</div>
+                    <div class="mcol-item-d">Distinguishes procurement from adoption. License utilization without active use indicates a gap.</div>
                 </div>
                 <div class="mcol-item">
-                    <div class="mcol-item-t">Managers who can articulate a specific AI use case</div>
-                    <div class="mcol-item-d">The clearest signal the change layer owns the mission.</div>
+                    <div class="mcol-item-t">Managers able to describe a specific AI use case</div>
+                    <div class="mcol-item-d">A reliable proxy for managerial understanding and ownership of the initiative.</div>
                 </div>
                 <div class="mcol-item">
-                    <div class="mcol-item-t">AI experiments or pilots initiated per quarter</div>
-                    <div class="mcol-item-d">Measures whether curiosity is converting into action.</div>
+                    <div class="mcol-item-t">AI pilots or experiments initiated per quarter</div>
+                    <div class="mcol-item-d">Indicates whether organizational capability is translating into operational experimentation.</div>
                 </div>
             </div>
 
@@ -1666,23 +2081,23 @@
             <div class="mcol mcol-lagging">
                 <div class="mcol-head">
                     <div class="mcol-head-t">Lagging Indicators</div>
-                    <div class="mcol-head-sub">Confirm outcomes. Measure over time.</div>
+                    <div class="mcol-head-sub">Confirm outcomes. Report at period close.</div>
                 </div>
                 <div class="mcol-item">
-                    <div class="mcol-item-t">Productivity delta in AI augmented vs. non augmented roles</div>
-                    <div class="mcol-item-d">Quantifies the actual output lift attributable to AI.</div>
+                    <div class="mcol-item-t">Productivity differential, AI-augmented vs. baseline roles</div>
+                    <div class="mcol-item-d">Quantifies measurable output improvement attributable to AI enablement.</div>
                 </div>
                 <div class="mcol-item">
-                    <div class="mcol-item-t">Reduction in time on low judgment, repeatable tasks</div>
-                    <div class="mcol-item-d">Tracks whether AI frees people for higher value work.</div>
+                    <div class="mcol-item-t">Reduction in time spent on low-judgment, repeatable tasks</div>
+                    <div class="mcol-item-d">Confirms whether capacity has been redirected to higher-value work.</div>
                 </div>
                 <div class="mcol-item">
-                    <div class="mcol-item-t">Decision cycle time for AI assisted processes</div>
-                    <div class="mcol-item-d">Measures whether AI accelerates the business.</div>
+                    <div class="mcol-item-t">Decision cycle time for AI-assisted processes</div>
+                    <div class="mcol-item-d">Measures whether AI is accelerating business outcomes, not only supporting them.</div>
                 </div>
                 <div class="mcol-item">
-                    <div class="mcol-item-t">Employee confidence using AI for core job tasks</div>
-                    <div class="mcol-item-d">Validates whether training translated to real capability.</div>
+                    <div class="mcol-item-t">Employee confidence in AI-assisted execution</div>
+                    <div class="mcol-item-d">Validates whether training translated into sustained on-the-job capability.</div>
                 </div>
             </div>
         </div>
@@ -1693,7 +2108,7 @@
 <section class="slide t-dark divider">
     <div class="divider-inner r">
         <div class="label">Section 05</div>
-        <h2 class="divider-title">From <i>Adoption</i> to <i>Transformation</i></h2>
+        <h2 class="divider-title">Implementation <i>Risks</i></h2>
         <div class="divider-line"></div>
     </div>
 </section>
@@ -1703,13 +2118,13 @@
     <div class="bar"></div>
     <div class="slide-body">
         <div class="label r">Section 05</div>
-        <h2 class="heading r">Common Pitfalls & How to <i>Avoid Them</i></h2>
+        <h2 class="heading r">Common Implementation <i>Pitfalls</i></h2>
         <div class="nlist r">
-            <div class="nitem"><div class="nitem-n">01</div><div class="nitem-t">Buying Tools Before Building Skills</div><div class="nitem-d">Run a skills baseline before any technology purchase. Tools without capability create expensive shelfware.</div></div>
-            <div class="nitem"><div class="nitem-n">02</div><div class="nitem-t">One Size Fits All Training</div><div class="nitem-d">Design role specific learning paths. A CCO and a surveillance analyst need fundamentally different AI fluency.</div></div>
-            <div class="nitem"><div class="nitem-n">03</div><div class="nitem-t">Treating AI as an IT Initiative</div><div class="nitem-d">Anchor AI readiness in business outcomes, not technology deployment. IT enables. The business leads.</div></div>
-            <div class="nitem"><div class="nitem-n">04</div><div class="nitem-t">Ignoring Middle Management</div><div class="nitem-d">Make managers the first wave of upskilling. They translate strategy into daily behavior for their teams.</div></div>
-            <div class="nitem"><div class="nitem-n">05</div><div class="nitem-t">Mistaking Adoption for Transformation</div><div class="nitem-d">Measure outcomes, not usage. People using a tool is adoption. People changing how they work is transformation.</div></div>
+            <div class="nitem"><div class="nitem-n">01</div><div class="nitem-t">Procurement before capability</div><div class="nitem-d">Tools deployed without corresponding skills create unused licenses and unrealized spend. Establish a capability baseline before committing to technology investment.</div></div>
+            <div class="nitem"><div class="nitem-n">02</div><div class="nitem-t">Standardized training across roles</div><div class="nitem-d">A Chief Compliance Officer and a surveillance analyst require different levels of AI fluency and different content depth. Role-specific learning paths are essential.</div></div>
+            <div class="nitem"><div class="nitem-n">03</div><div class="nitem-t">Positioning AI as a technology project</div><div class="nitem-d">AI readiness must be anchored in business outcomes and owned by the business. IT and data functions provide the enabling infrastructure, but should not lead the program.</div></div>
+            <div class="nitem"><div class="nitem-n">04</div><div class="nitem-t">Bypassing middle management</div><div class="nitem-d">Managers translate strategy into operational behavior. Manager-level upskilling is typically the highest-leverage investment in any AI program.</div></div>
+            <div class="nitem"><div class="nitem-n">05</div><div class="nitem-t">Confusing adoption with impact</div><div class="nitem-d">Usage metrics confirm adoption. Outcome metrics, such as cycle time, productivity, and error rates, confirm transformation. Both are needed; the second is decisive.</div></div>
         </div>
     </div>
 </section>
@@ -1719,27 +2134,27 @@
     <div class="bar"></div>
     <div class="slide-body">
         <div class="label r">Section 05</div>
-        <h2 class="heading r">What Transformation <i>Actually</i> Looks Like</h2>
+        <h2 class="heading r">Adoption <i>vs.</i> Transformation</h2>
         <div class="cmp r">
             <div class="cmp-corner"></div>
-            <div class="cmp-ha">Organization A · Adopted AI</div>
-            <div class="cmp-hb">Organization B · Transformed with AI</div>
+            <div class="cmp-ha">Organization A · Adoption</div>
+            <div class="cmp-hb">Organization B · Transformation</div>
 
-            <div class="cmp-label">What They Did</div>
-            <div class="cmp-cell">Deployed an AI compliance tool to 200 analysts. Ran a 2 hour onboarding. Tracked license utilization.</div>
-            <div class="cmp-cell cmp-cell-b">Same tools. Started with role specific use cases, trained managers first, embedded AI into existing workflows.</div>
+            <div class="cmp-label">Approach</div>
+            <div class="cmp-cell">Deployed an AI compliance tool to 200 analysts. Provided a 2-hour onboarding session. Tracked license utilization as the primary metric.</div>
+            <div class="cmp-cell cmp-cell-b">Same tools, different approach. Started with role-specific use cases, trained managers first, and embedded AI into existing workflows.</div>
 
-            <div class="cmp-label">6 Months Later</div>
-            <div class="cmp-cell">22% of licenses actively used. Analysts unsure how the tool fits their work. Managers not involved.</div>
-            <div class="cmp-cell cmp-cell-b">74% active usage. Analysts can name three or more tasks AI handles. Managers champion the change.</div>
+            <div class="cmp-label">After Six Months</div>
+            <div class="cmp-cell">22% active license utilization. Analysts unclear on how to apply the tool in their roles. Managers not engaged in deployment.</div>
+            <div class="cmp-cell cmp-cell-b">74% active usage. Analysts identify three or more tasks where AI delivers measurable lift. Managers actively reinforce the change.</div>
 
             <div class="cmp-label">Business Outcome</div>
-            <div class="cmp-cell">No measurable productivity change. Significant tool spend. Leadership questioning AI ROI.</div>
-            <div class="cmp-cell cmp-cell-b">28% reduction in time on repeatable tasks. Decision cycles shortened. Teams doing more with same headcount.</div>
+            <div class="cmp-cell">No measurable productivity change. Significant unrealized spend. Leadership questioning return on investment.</div>
+            <div class="cmp-cell cmp-cell-b">28% reduction in time spent on repeatable tasks. Shorter decision cycles. Expanded coverage without headcount increase.</div>
 
             <div class="cmp-label">Root Cause</div>
-            <div class="cmp-cell">Tool without context. Training without embedding. Adoption without behavior change.</div>
-            <div class="cmp-cell cmp-cell-b">Strategy before tools. Culture alongside capability. Measurement tied to outcomes, not logins.</div>
+            <div class="cmp-cell">Tool without business context. Training without workflow integration. Adoption metrics without behavior change.</div>
+            <div class="cmp-cell cmp-cell-b">Strategy before tools. Capability development alongside deployment. Measurement tied to operational outcomes.</div>
         </div>
     </div>
 </section>
@@ -1758,16 +2173,20 @@
         </svg>
     </div>
     <div class="close-grid">
+        <!-- LEFT: Thank you + contact -->
         <div class="close-left">
             <h2 class="r" style="font-family: var(--fs); font-size: var(--title); font-weight: 600;">Thank You.</h2>
-            <p class="r" style="font-family: var(--fse); font-size: var(--h3); font-style: italic; color: var(--blue);">Questions?</p>
+            <p class="r" style="font-family: var(--fs); font-size: var(--h3); font-weight: 500; color: var(--blue);">Open for discussion.</p>
             <div class="r" style="width: 50px; height: 2px; background: var(--blue);"></div>
-            <div class="r">
-                <div style="font-weight: 600; font-size: var(--body);">Malik Alatshan</div>
-                <div style="font-size: var(--small); color: var(--light-dim); margin-top: 3px;">Founder & CEO, Inscend AI</div>
-                <div style="font-size: var(--small); color: var(--light-dim);">Toronto, Canada · Dubai, UAE</div>
+
+            <div class="r close-me-block" style="border-top: none; margin-top: clamp(0.3rem, 0.8vh, 0.6rem); padding-top: 0;">
+                <div class="close-me-label">About Me</div>
+                <div class="close-me-name">Malik Alatshan</div>
+                <div class="close-me-role">Founder & CEO, Inscend AI · Toronto · Dubai</div>
+                <div class="close-me-role" style="margin-top: clamp(0.4rem, 0.8vh, 0.6rem); line-height: 1.55;">Twenty years across management consulting, capital markets, and enterprise transformation. Fulbright Scholar with master's degrees in Finance (Texas A&M) and Business (Case Western Reserve). Previously at RBC Capital Markets, Ernst & Young, and investment management roles in the Middle East.</div>
             </div>
-            <div class="r" style="font-size: var(--small); color: var(--blue); margin-top: 4px;">
+
+            <div class="r" style="font-size: var(--small); color: var(--blue); margin-top: clamp(0.5rem, 1vh, 0.9rem);">
                 <a href="mailto:malatshan@inscendai.com" style="color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(72,151,247,0.4);">malatshan@inscendai.com</a><br>
                 <a href="tel:+14377784955" style="color: var(--blue); text-decoration: none;">+1 437 778 4955</a><br>
                 <a href="https://inscendai.com" target="_blank" rel="noopener" style="color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(72,151,247,0.4);">inscendai.com</a>
@@ -1775,8 +2194,31 @@
                 <a href="https://linkedin.com/in/alatshanmalik" target="_blank" rel="noopener" style="color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(72,151,247,0.4);">linkedin.com/in/alatshanmalik</a>
             </div>
         </div>
-        <div class="close-right">
-            <div class="close-brand r">INSCEND <span>AI</span></div>
+
+        <!-- RIGHT: Track record + brand -->
+        <div class="close-right" style="flex-direction: column; align-items: stretch; justify-content: center; padding: clamp(2rem, 4vw, 4rem) clamp(2rem, 4vw, 4rem) clamp(3rem, 6vh, 4.5rem);">
+            <div class="r" style="text-align: center; margin-bottom: clamp(1rem, 2vh, 1.8rem);">
+                <div class="close-brand">INSCEND <span>AI</span></div>
+            </div>
+
+            <div class="r close-testimonials" style="border-top: none; margin-top: 0; padding-top: 0;">
+                <div class="close-test-label">Select Engagements</div>
+                <div class="close-client-list">
+                    <div><strong>Wealth Management</strong><br>AI strategy and use case prioritization</div>
+                    <div><strong>Capital Markets</strong><br>Workflow automation and efficiency</div>
+                    <div><strong>Professional Services</strong><br>Custom agents for accounting and legal</div>
+                    <div><strong>Public Sector</strong><br>Human capital and workforce strategy</div>
+                    <div><strong>International Development</strong><br>Skills and economic diversification</div>
+                    <div><strong>Sovereign & Government</strong><br>Strategy advisory across the GCC</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Legal footnotes strip across bottom -->
+    <div class="legal-footnotes">
+        <div class="legal-footnotes-grid">
+            <div class="lfn-item">© 2026 Inscend AI™. All rights reserved.</div>
         </div>
     </div>
 </section>
@@ -1785,13 +2227,23 @@
 <!-- NAV -->
 <nav class="nav">
     <button class="nav-btn" onclick="P.prev()">← Prev</button>
-    <span class="nav-count" id="nc">1 / 22</span>
+    <span class="nav-count" id="nc" onclick="P.togglePicker()" role="button" tabindex="0">1 / 22</span>
     <button class="nav-btn" onclick="P.next()">Next →</button>
 </nav>
+
+<!-- SLIDE PICKER -->
+<div class="slide-picker" id="picker" role="dialog" aria-label="Slide navigation">
+    <div class="picker-header">
+        <span class="picker-title">Jump to Slide</span>
+        <button class="picker-close" onclick="P.togglePicker()" aria-label="Close">✕</button>
+    </div>
+    <div class="picker-list" id="pickerList"></div>
+</div>
 
 <script>
 class Pres {
     constructor() {
+        this.injectFooters();
         this.sl = document.querySelectorAll('.slide');
         this.cur = 0;
         this.tot = this.sl.length;
@@ -1799,8 +2251,96 @@ class Pres {
         this.keys();
         this.touch();
         this.wheel();
+        this.buildPicker();
         this.sl[0].classList.add('vis');
         this.upd();
+    }
+    buildPicker() {
+        // Slide map with kicker labels and titles
+        const slides = [
+            { kicker: 'Cover', title: 'AI in Compliance' },
+            { kicker: 'About', title: 'Inscend AI' },
+            { kicker: 'Agenda', title: 'State of Play' },
+            { kicker: 'Section 01', title: 'Market Context', isDivider: true },
+            { kicker: 'Section 01', title: 'The Landscape Is Shifting' },
+            { kicker: 'Section 02', title: 'Generative and Agentic AI', isDivider: true },
+            { kicker: 'Section 02', title: 'Generative AI and Agentic AI' },
+            { kicker: 'Section 03', title: 'AI Across the Compliance Value Chain', isDivider: true },
+            { kicker: 'Section 03', title: 'The Compliance Value Chain' },
+            { kicker: 'Section 03', title: 'The Transition in Practice' },
+            { kicker: 'Section 03', title: 'AI Opportunities: Upstream' },
+            { kicker: 'Section 03', title: 'AI Opportunities: Downstream' },
+            { kicker: 'Section 03', title: 'Impact Across Four Dimensions' },
+            { kicker: 'Section 04', title: 'Readiness Framework', isDivider: true },
+            { kicker: 'Section 04', title: 'What "AI Ready" Really Means' },
+            { kicker: 'Section 04', title: 'Data Readiness' },
+            { kicker: 'Section 04', title: 'A Five-Stage Approach' },
+            { kicker: 'Section 04', title: 'Measuring What Matters' },
+            { kicker: 'Section 05', title: 'Implementation Risks', isDivider: true },
+            { kicker: 'Section 05', title: 'Common Pitfalls' },
+            { kicker: 'Section 05', title: 'Adoption vs. Transformation' },
+            { kicker: 'Closing', title: 'Thank You' }
+        ];
+
+        const list = document.getElementById('pickerList');
+        if (!list) return;
+        list.innerHTML = slides.map((s, i) => `
+            <div class="picker-item" data-idx="${i}" onclick="P.goTo(${i})">
+                <div class="picker-num">${String(i + 1).padStart(2, '0')}</div>
+                <div class="picker-text">
+                    <div class="picker-kicker">${s.kicker}</div>
+                    <div class="picker-name">${s.title}</div>
+                </div>
+            </div>
+        `).join('');
+
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            const picker = document.getElementById('picker');
+            const counter = document.getElementById('nc');
+            if (!picker || !picker.classList.contains('open')) return;
+            if (picker.contains(e.target) || counter.contains(e.target)) return;
+            picker.classList.remove('open');
+        });
+    }
+    togglePicker() {
+        const p = document.getElementById('picker');
+        if (!p) return;
+        p.classList.toggle('open');
+        if (p.classList.contains('open')) {
+            // Scroll active item into view
+            const active = p.querySelector('.picker-item.active');
+            if (active) active.scrollIntoView({ block: 'nearest' });
+        }
+    }
+    goTo(i) {
+        if (i < 0 || i >= this.tot) return;
+        this.cur = i;
+        this.sl[i].scrollIntoView({ behavior: 'smooth' });
+        // Close picker after selection
+        const p = document.getElementById('picker');
+        if (p) p.classList.remove('open');
+        this.upd();
+    }
+    injectFooters() {
+        // Add © footer to every slide that doesn't already have one
+        const slides = document.querySelectorAll('.slide');
+        const footerText = '© 2026 Inscend AI™. All rights reserved.';
+        slides.forEach((s, idx) => {
+            // Skip slides that have legal footnotes (subsume the footer)
+            if (s.querySelector('.legal-footnotes')) return;
+            if (s.querySelector('.footer-mark')) {
+                // Update existing footers to the new text
+                s.querySelector('.footer-mark').textContent = footerText;
+                return;
+            }
+            // Skip dividers
+            if (s.classList.contains('divider')) return;
+            const f = document.createElement('div');
+            f.className = 'footer-mark';
+            f.textContent = footerText;
+            s.appendChild(f);
+        });
     }
     io() {
         const ob = new IntersectionObserver(es => {
@@ -1816,9 +2356,37 @@ class Pres {
     }
     keys() {
         document.addEventListener('keydown', e => {
+            // Close picker on ESC
+            if (e.code === 'Escape') {
+                const p = document.getElementById('picker');
+                if (p && p.classList.contains('open')) {
+                    e.preventDefault();
+                    p.classList.remove('open');
+                    return;
+                }
+            }
+            // Don't navigate while picker is open
+            const p = document.getElementById('picker');
+            if (p && p.classList.contains('open')) return;
+            // Toggle picker with G or M
+            if (e.code === 'KeyG' || e.code === 'KeyM') {
+                e.preventDefault();
+                this.togglePicker();
+                return;
+            }
             if (['ArrowDown','ArrowRight','Space','PageDown'].includes(e.code)) { e.preventDefault(); this.next(); }
             else if (['ArrowUp','ArrowLeft','PageUp'].includes(e.code)) { e.preventDefault(); this.prev(); }
         });
+        // Keyboard accessibility on counter
+        const counter = document.getElementById('nc');
+        if (counter) {
+            counter.addEventListener('keydown', e => {
+                if (e.code === 'Enter' || e.code === 'Space') {
+                    e.preventDefault();
+                    this.togglePicker();
+                }
+            });
+        }
     }
     touch() {
         let y = 0;
@@ -1850,6 +2418,10 @@ class Pres {
         const p = document.getElementById('prog');
         if (c) c.textContent = `${this.cur + 1} / ${this.tot}`;
         if (p) p.style.width = `${((this.cur + 1) / this.tot) * 100}%`;
+        // Update picker active state
+        document.querySelectorAll('.picker-item').forEach((it, i) => {
+            it.classList.toggle('active', i === this.cur);
+        });
     }
 }
 const P = new Pres();
